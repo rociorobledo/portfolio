@@ -156,64 +156,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <!-- HEADER CON TIPOGRAFÍA IGUAL AL INDEX - VOLVER EN BLANCO -->
 <header class="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-[#0d0d0d]/80 border-b border-gray-800">
-    <nav class="w-full py-4 px-6 flex justify-between items-center max-w-7xl mx-auto">
+  <nav class="w-full py-3 px-4 sm:py-4 sm:px-6 lg:px-8">
+    
+    <div class="flex items-center justify-between max-w-7xl mx-auto">
+      
+      <!-- Logo o nombre -->
+      <span class="text-white font-bold text-base sm:text-lg lg:text-xl">RR</span>
+      
+      <!-- Menú principal (igual que inicio) -->
+      <div class="flex items-center justify-center flex-1 gap-3 sm:gap-4 md:gap-6 lg:gap-8 text-gray-300 text-xs sm:text-sm md:text-base font-medium">
         
-        <a href="index.html" class="text-white hover:text-[#C084FC] transition-colors text-lg font-semibold" style="font-family: 'Gentium Book Plus', serif;">
-            <i class="fas fa-arrow-left mr-2"></i>
-            <span class="lang-es">Volver</span>
-            <span class="lang-en hidden">Back</span>
+        <a href="index.html" 
+           class="nav-link text-gray-300 hover:text-[#c084fc] transition-all duration-300 px-1 sm:px-2 py-1 whitespace-nowrap">
+          <span class="lang-es">Inicio</span>
+          <span class="lang-en hidden">Home</span>
         </a>
         
-        <!-- Título del proyecto (oculto en mobile para no saturar) -->
-        <span class="text-white hover:text-[#C084FC] transition-colors text-lg font-semibold" style="font-family: 'Gentium Book Plus', serif;">
-            <span class="lang-es">Google Merch Store</span>
-            <span class="lang-en hidden">Google Merch Store</span>
-        </span>
-        
-        <!-- Botón de menú mobile (hamburguesa) -->
-        <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-[#C084FC] text-2xl">
-            <i class="fas fa-bars"></i>
-        </button>
-        
-        <!-- Botón de idioma (solo desktop) -->
+        <!-- Botón de idioma (visible siempre) -->
         <button id="lang-toggle" 
-                class="hidden md:flex text-white hover:text-[#C084FC] text-sm px-4 py-1.5 rounded-full border border-white/30 hover:border-[#C084FC] transition-all duration-300 items-center gap-2 bg-white/5 backdrop-blur-sm">
-            <span class="lang-es flex items-center gap-2">
-                <img src="assets/images/flag-usa.png" alt="USA flag" class="w-4 h-3 inline-block object-cover">
-                <span>English</span>
-            </span>
-            <span class="lang-en hidden flex items-center gap-2">
-                <img src="assets/images/flag-spain.png" alt="Spain flag" class="w-4 h-3 inline-block object-cover">
-                <span>Español</span>
-            </span>
+                class="text-white hover:text-[#C084FC] text-xs sm:text-sm px-2 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/30 hover:border-[#C084FC] transition-all duration-300 flex items-center gap-1 sm:gap-2 bg-white/5 backdrop-blur-sm whitespace-nowrap">
+          <span class="lang-es flex items-center gap-1">
+            <img src="assets/images/flag-usa.png" alt="USA flag" class="w-3 sm:w-4 h-2.5 sm:h-3 inline-block object-cover">
+            <span>EN</span>
+          </span>
+          <span class="lang-en hidden flex items-center gap-1">
+            <img src="assets/images/flag-spain.png" alt="Spain flag" class="w-3 sm:w-4 h-2.5 sm:h-3 inline-block object-cover">
+            <span>ES</span>
+          </span>
         </button>
         
-    </nav>
-
-    <!-- Menú mobile (desplegable) -->
-    <div id="mobile-menu" class="hidden md:hidden bg-[#0d0d0d]/95 backdrop-blur-md border-t border-gray-800 py-4 px-6">
-        <div class="flex flex-col items-center space-y-4">
-            
-            <!-- Botón de idioma dentro del menú mobile -->
-            <button id="mobile-lang-toggle" 
-                    class="text-white hover:text-[#C084FC] text-sm px-4 py-1.5 rounded-full border border-white/30 hover:border-[#C084FC] transition-all duration-300 flex items-center gap-2 bg-white/5 backdrop-blur-sm mx-auto">
-                <span class="lang-es flex items-center gap-2">
-                    <img src="assets/images/flag-usa.png" alt="USA flag" class="w-4 h-3 inline-block object-cover">
-                    <span>English</span>
-                </span>
-                <span class="lang-en hidden flex items-center gap-2">
-                    <img src="assets/images/flag-spain.png" alt="Spain flag" class="w-4 h-3 inline-block object-cover">
-                    <span>Español</span>
-                </span>
-            </button>
-            
-            <!-- Título del proyecto en mobile -->
-            <span class="text-gray-300 text-sm tech-font pt-2 border-t border-gray-800 w-full text-center">
-                <span class="lang-es">Google Merch Store</span>
-                <span class="lang-en hidden">Google Merch Store</span>
-            </span>
-        </div>
+      </div>
+      
+      <!-- Espacio vacío para equilibrar -->
+      <span class="text-white font-bold text-base sm:text-lg lg:text-xl opacity-0">RR</span>
+      
     </div>
+    
+  </nav>
 </header>
 
 <main class="relative z-10 pt-24 pb-16 px-4 max-w-7xl mx-auto min-h-screen">
