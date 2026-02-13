@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Journey Analysis · Rocio Robledo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Gentium Book Plus', serif;
+            background: #0D0D0D;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        .tech-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        /* === FONDO DE BARRAS DE MÉTRICAS === */
+        #fondo-metricas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 0;
+            background: #0D0D0D;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .barra-metrica {
+            position: absolute;
+            bottom: 0;
+            width: 8px;
+            background: linear-gradient(to top, #A78BFA, #6D28D9);
+            border-radius: 4px 4px 0 0;
+            animation: barraPulse 3s ease-in-out infinite;
+            opacity: 0.2;
+            box-shadow: 0 0 15px #A78BFA;
+        }
+
+        .numero-metrica {
+            position: absolute;
+            color: rgba(167, 139, 250, 0.25);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            white-space: nowrap;
+            animation: flotarNumero 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes barraPulse {
+            0%, 100% { height: 20px; opacity: 0.15; }
+            50% { height: 80px; opacity: 0.3; }
+        }
+
+        @keyframes flotarNumero {
+            0% { transform: translate(0, 100vh); opacity: 0; }
+            10% { opacity: 0.2; }
+            90% { opacity: 0.2; }
+            100% { transform: translate(50px, -20vh); opacity: 0; }
+        }
+        
+        /* Para que el contenido esté sobre el fondo */
+        main, header, footer {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-[#0D0D0D] text-white">
+
+<!-- === FONDO DE BARRAS DE MÉTRICAS === -->
+<div id="fondo-metricas"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const fondo = document.getElementById('fondo-metricas');
+    
+    // BARRAS DE MÉTRICAS
+    for (let i = 0; i < 40; i++) {
+        const barra = document.createElement('div');
+        barra.className = 'barra-metrica';
+        barra.style.left = (i * 2.5) + '%';
+        barra.style.animationDelay = i * 0.1 + 's';
+        barra.style.animationDuration = (2 + Math.random() * 3) + 's';
+        barra.style.background = i % 3 === 0 
+            ? 'linear-gradient(to top, #C084FC, #7C3AED)' 
+            : 'linear-gradient(to top, #A78BFA, #6D28D9)';
+        fondo.appendChild(barra);
+    }
+    
+    // NÚMEROS FLOTANTES (métricas)
+    const metricas = [
+        '54.2K', '39.3K', '3.24%', '143.9K', '784', '1.45%',
+        '67%', '42%', '89%', '12.8K', '3.2K', '1.8K',
+        'CTR 2.4', 'ROAS 4.5', 'AOV 89.5', 'LTV 3.2'
+    ];
+    
+    metricas.forEach((text, i) => {
+        const el = document.createElement('div');
+        el.className = 'numero-metrica';
+        el.textContent = text;
+        el.style.left = Math.random() * 90 + '%';
+        el.style.animationDelay = i * 0.6 + 's';
+        el.style.animationDuration = (15 + Math.random() * 15) + 's';
+        el.style.fontSize = (10 + Math.floor(Math.random() * 8)) + 'px';
+        fondo.appendChild(el);
+    });
+});
+</script>
+
+<!-- HEADER CON TIPOGRAFÍA IGUAL AL INDEX - VOLVER EN BLANCO -->
+
+<header class="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-[#0d0d0d]/80 border-b border-gray-800">
+    <nav class="w-full py-4 px-6 flex justify-between items-center max-w-7xl mx-auto">
+        
+        <a href="index.html" class="text-white hover:text-[#C084FC] transition-colors text-lg font-semibold" style="font-family: 'Gentium Book Plus', serif;">
+            <i class="fas fa-arrow-left mr-2"></i>
+            <span class="lang-es">Volver</span>
+            <span class="lang-en hidden">Back</span>
+        </a>
+        
+        <span class="text-white hover:text-[#C084FC] transition-colors text-lg font-semibold" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Recorrido del Usuario</span>
+            <span class="lang-en hidden">User Journey Analysis</span>
+        </span>
+        
+        <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-[#C084FC] text-2xl">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <button id="lang-toggle" 
+                class="hidden md:flex text-white hover:text-[#C084FC] text-sm px-4 py-1.5 rounded-full border border-white/30 hover:border-[#C084FC] transition-all duration-300 items-center gap-2 bg-white/5 backdrop-blur-sm">
+            <span class="lang-es flex items-center gap-2">
+                <img src="assets/images/flag-usa.png" alt="USA flag" class="w-4 h-3 inline-block object-cover">
+                <span>English</span>
+            </span>
+            <span class="lang-en hidden flex items-center gap-2">
+                <img src="assets/images/flag-spain.png" alt="Spain flag" class="w-4 h-3 inline-block object-cover">
+                <span>Español</span>
+            </span>
+        </button>
+        
+    </nav>
+
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0d0d0d]/95 backdrop-blur-md border-t border-gray-800 py-4 px-6">
+        <div class="flex flex-col items-center space-y-4">
+            
+            <button id="mobile-lang-toggle" 
+                    class="text-white hover:text-[#C084FC] text-sm px-4 py-1.5 rounded-full border border-white/30 hover:border-[#C084FC] transition-all duration-300 flex items-center gap-2 bg-white/5 backdrop-blur-sm mx-auto">
+                <span class="lang-es flex items-center gap-2">
+                    <img src="assets/images/flag-usa.png" alt="USA flag" class="w-4 h-3 inline-block object-cover">
+                    <span>English</span>
+                </span>
+                <span class="lang-en hidden flex items-center gap-2">
+                    <img src="assets/images/flag-spain.png" alt="Spain flag" class="w-4 h-3 inline-block object-cover">
+                    <span>Español</span>
+                </span>
+            </button>
+            
+            <span class="text-gray-300 text-sm tech-font pt-2 border-t border-gray-800 w-full text-center">
+                <span class="lang-es">Recorrido del Usuario</span>
+                <span class="lang-en hidden">User Journey Analysis</span>
+            </span>
+        </div>
+    </div>
+</header>
+
+<main class="relative z-10 pt-24 pb-16 px-4 max-w-7xl mx-auto min-h-screen">
+    
+    <!-- TÍTULO -->
+    <div class="mb-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-[#A78BFA] mb-4">
+            <span class="lang-es">Recorrido del Usuario</span>
+            <span class="lang-en hidden">User Journey Analysis</span>
+        </h1>
+        <p class="text-gray-400 text-lg max-w-3xl mx-auto">
+            <span class="lang-es">
+                Análisis de funnel de conversión, detección de puntos de abandono y optimización.
+            </span>
+            <span class="lang-en hidden">
+                Conversion funnel analysis, drop-off detection and optimization.
+            </span>
+        </p>
+    </div>
+    
+    <!-- DASHBOARD INTERACTIVO -->
+    <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-2xl border border-[#A78BFA]/20 p-4 mb-8">
+        <div class="w-full h-[600px] bg-gray-950 rounded-xl overflow-hidden">
+            <iframe 
+                src="https://lookerstudio.google.com/embed/reporting/9d36ae98-b78e-420f-ac0f-4e6cd99e784b/page/p_2vc7ofev0d" 
+                frameborder="0" 
+                style="border:0; width: 100%; height: 100%;" 
+                allowfullscreen 
+                sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+            </iframe>
+        </div>
+    </div>
+    
+    <!-- CONTENIDO DE 2 COLUMNAS -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- COLUMNA IZQUIERDA (DESCRIPCIÓN) -->
+        <div class="lg:col-span-2 bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800 p-6">
+            <h2 class="text-2xl font-semibold text-[#A78BFA] mb-4">
+                <span class="lang-es">Descripción del proyecto</span>
+                <span class="lang-en hidden">Project description</span>
+            </h2>
+            
+            <div class="space-y-4 text-gray-300">
+                <p>
+    <span class="lang-es">
+        Este dashboard analiza el comportamiento de los clientes que ingresan a <strong class="text-white">Google Merch Store</strong>, una tienda online que vende productos de la marca Google. Utilizando la cuenta demo de Google Analytics 4, se identifica de manera clara el camino que siguen los usuarios desde que ingresan al sitio hasta que completan una compra. El dashboard permite segmentar por dispositivo, fuente de tráfico y ubicación geográfica para entender qué factores influyen en la conversión. Con esta información, es posible priorizar acciones de mejora y diseñar estrategias efectivas para retener usuarios y aumentar las ventas.
+    </span>
+    <span class="lang-en hidden">
+        This dashboard analyzes customer behavior on <strong class="text-white">Google Merch Store</strong>, an online store selling Google-branded products. Using the Google Analytics 4 demo account, it identifies the path users take from entering the site to completing a purchase. The dashboard allows segmentation by device, traffic source, and geographic location to understand which factors influence conversion. With this information, it is possible to prioritize improvement actions and design more effective strategies to retain users and increase sales.
+    </span>
+</p>
+                
+                <h3 class="text-xl font-semibold text-[#A78BFA] mt-6">
+                    <span class="lang-es">Objetivos del análisis:</span>
+                    <span class="lang-en hidden">Analysis objectives:</span>
+                </h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-400">
+                    <li class="lang-es">Visualizar el funnel completo: sesiones → añadir al carrito → checkout → compra.</li>
+                    <li class="lang-en hidden">Visualize complete funnel: sessions → add to cart → checkout → purchase.</li>
+                    <li class="lang-es">Detectar porcentaje de rebote.</li>
+                    <li class="lang-en hidden">Detect bounce rate.</li>
+                    <li class="lang-es">Segmentar por dispositivo, fuente de tráfico y ubicación geográfica.</li>
+                    <li class="lang-en hidden">Segment by device, traffic source and geographic location.</li>
+                    <li class="lang-es">Recomendar acciones para mejorar la tasa de conversión.</li>
+                    <li class="lang-en hidden">Recommend actions to improve conversion rate.</li>
+                </ul>
+                
+                <h3 class="text-xl font-semibold text-[#A78BFA] mt-6">
+                    <span class="lang-es">Tecnologías utilizadas:</span>
+                    <span class="lang-en hidden">Technologies used:</span>
+                </h3>
+                <div class="flex flex-wrap gap-2 mt-2">
+                    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">Google Analytics 4</span>
+                    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">Looker Studio</span>
+                    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">Data Visualization</span>
+                    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">Storytelling</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- COLUMNA DERECHA (FUNNEL) -->
+        <div class="bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800 p-6">
+            <h2 class="text-xl font-semibold text-[#A78BFA] mb-4">
+                <span class="lang-es">KPIs principales</span>
+                <span class="lang-en hidden">Main KPIs</span>
+            </h2>
+            
+            <div class="space-y-4">
+    <div class="flex justify-between items-center pb-2 border-b border-gray-800">
+        <span class="text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Sesiones</span>
+            <span class="lang-en hidden">Sessions</span>
+        </span>
+    </div>
+    <div class="flex justify-between items-center pb-2 border-b border-gray-800">
+        <span class="text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Porcentaje de rebote</span>
+            <span class="lang-en hidden">Bounce rate</span>
+        </span>
+    </div>
+    <div class="flex justify-between items-center pb-2 border-b border-gray-800">
+        <span class="text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Productos favoritos</span>
+            <span class="lang-en hidden">Favorite products</span>
+        </span>
+    </div>
+    <div class="flex justify-between items-center pb-2 border-b border-gray-800">
+        <span class="text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Compras</span>
+            <span class="lang-en hidden">Purchases</span>
+        </span>
+    </div>
+    <div class="flex justify-between items-center pt-2">
+        <span class="text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Total de compradores</span>
+            <span class="lang-en hidden">Total buyers</span>
+        </span>
+    </div>
+</div>
+            
+            <div class="mt-6 pt-4 border-t border-gray-800">
+                <a href="https://lookerstudio.google.com/reporting/9d36ae98-b78e-420f-ac0f-4e6cd99e784b" 
+                   target="_blank"
+                   class="inline-flex items-center gap-2 text-[#A78BFA] hover:text-[#C084FC] transition-colors">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span class="lang-es">Abrir en Looker Studio</span>
+                    <span class="lang-en hidden">Open in Looker Studio</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ESPACIO EXTRA PARA SCROLL -->
+    <div style="height: 50px;"></div>
+    
+</main>
+
+<!-- FOOTER IDÉNTICO AL INDEX (copiado exactamente) -->
+<footer class="text-center py-10">
+
+    <p class="text-sm mb-2 text-gray-400">
+        &copy; <span id="current-year"></span> Rocio Robledo
+    </p>
+
+    <p class="text-xs text-gray-500 mb-6">
+        <span class="lang-es">Análisis de datos · Analítica Digital </span>
+        <span class="lang-en hidden">Data Analytics · Digital Analytics </span>
+    </p>
+
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // --- 1. Año automático en footer ---
+    const yearElements = document.querySelectorAll('#current-year, #current-year-en');
+    const currentYear = new Date().getFullYear();
+    yearElements.forEach(el => el.textContent = currentYear);
+
+    // --- 2. Cambio de idioma ES / EN (CORREGIDO) ---
+    const langToggle = document.getElementById('lang-toggle');
+    const htmlElement = document.documentElement;
+
+    function setLanguage(lang) {
+        document.querySelectorAll('.lang-es').forEach(el =>
+            el.classList.toggle('hidden', lang !== 'es')
+        );
+        document.querySelectorAll('.lang-en').forEach(el =>
+            el.classList.toggle('hidden', lang !== 'en')
+        );
+        htmlElement.lang = lang;
+        localStorage.setItem('preferredLang', lang);
+    }
+
+    const storedLang = localStorage.getItem('preferredLang') || 'es';
+    setLanguage(storedLang);
+
+    if (langToggle) {
+        langToggle.addEventListener('click', () => {
+            const newLang = htmlElement.lang === 'es' ? 'en' : 'es';
+            setLanguage(newLang);
+        });
+    }
+
+    // --- 3. Cerrar menú mobile si existe (opcional, por compatibilidad) ---
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    }
+
+});
+</script>
+
+<!-- Scripts del fondo (se mantienen) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="assets/js/liquid-ether.js" defer></script>

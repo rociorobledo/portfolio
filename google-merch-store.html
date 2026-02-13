@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Merch Store · Rocio Robledo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts IGUAL QUE INDEX -->
+    <link href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Gentium Book Plus', serif;
+            background: #0D0D0D;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        /* Misma clase que en index */
+        .tech-font {
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+        
+        /* === FONDO DE NÚMEROS GOOGLE === */
+        #fondo-google {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 0;
+            background: #0D0D0D;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .numero-ga {
+            position: absolute;
+            color: rgba(66, 133, 244, 0.2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            white-space: nowrap;
+            animation: flotarNumero 25s linear infinite;
+            text-shadow: 0 0 10px rgba(66, 133, 244, 0.2);
+            font-weight: 500;
+            letter-spacing: 1px;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .barra-google {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            width: 90%;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                #4285F4, #EA4335, #FBBC05, #34A853, #4285F4);
+            opacity: 0.15;
+            border-radius: 2px;
+            animation: barraMovil 10s linear infinite;
+            background-size: 200% 100%;
+            pointer-events: none;
+        }
+
+        @keyframes flotarNumero {
+            0% { transform: translate(0, 100vh); opacity: 0; }
+            5% { opacity: 0.3; }
+            95% { opacity: 0.3; }
+            100% { transform: translate(50px, -20vh); opacity: 0; }
+        }
+
+        @keyframes barraMovil {
+            0% { background-position: 0% 0; opacity: 0.1; }
+            50% { opacity: 0.25; }
+            100% { background-position: 200% 0; opacity: 0.1; }
+        }
+        
+        /* Para que el contenido esté sobre el fondo */
+        main, header, footer {
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Forzar tipografía en header */
+        header a, header button, header span {
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body class="bg-[#0D0D0D] text-white">
+
+<!-- === FONDO DE NÚMEROS GOOGLE === -->
+<div id="fondo-google"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const fondo = document.getElementById('fondo-google');
+    
+    const metrics = [
+        'users: 39,323', 'sessions: 54,281', 'bounce: 42.3%', 'conv: 3.24%',
+        'revenue: $143.9K', 'transactions: 784', 'pageviews: 128.4K',
+        'avg. session: 2m 34s', 'new users: 67%', 'returning: 33%',
+        'desktop: 48%', 'mobile: 45%', 'tablet: 7%', 'google: 24.5K',
+        'direct: 12.8K', 'organic: 8.3K', 'social: 3.1K', 'email: 1.2K',
+        'goal 1: 89%', 'goal 2: 67%', 'GA4 events: 12.4K', 
+        'purchases: 784', 'add to cart: 3.2K', 'checkout: 1.8K',
+        'CTR: 2.4%', 'ROAS: 4.5x', 'AOV: $89.50', 'LTV: 3.2'
+    ];
+    
+    metrics.forEach((text, i) => {
+        const el = document.createElement('div');
+        el.className = 'numero-ga';
+        el.textContent = text;
+        el.style.left = Math.random() * 90 + '%';
+        el.style.animationDelay = i * 0.5 + 's';
+        el.style.animationDuration = (20 + Math.random() * 20) + 's';
+        el.style.fontSize = (11 + Math.floor(Math.random() * 8)) + 'px';
+        
+        const colors = [
+            'rgba(66, 133, 244, 0.25)',
+            'rgba(234, 67, 53, 0.2)',
+            'rgba(251, 188, 5, 0.2)',
+            'rgba(52, 168, 83, 0.2)'
+        ];
+        el.style.color = colors[Math.floor(Math.random() * colors.length)];
+        
+        fondo.appendChild(el);
+    });
+    
+    const barra = document.createElement('div');
+    barra.className = 'barra-google';
+    fondo.appendChild(barra);
+    
+    const logos = ['G', 'GA4', 'GMC', 'YT', 'ADS', 'Search', 'Analytics'];
+    logos.forEach((logo, i) => {
+        const el = document.createElement('div');
+        el.className = 'numero-ga';
+        el.textContent = logo;
+        el.style.fontSize = '32px';
+        el.style.fontWeight = '700';
+        el.style.opacity = '0.03';
+        el.style.left = (5 + i * 12) + '%';
+        el.style.top = (10 + i * 4) + '%';
+        el.style.animation = 'none';
+        el.style.color = '#4285F4';
+        fondo.appendChild(el);
+    });
+});
+</script>
+
+<!-- HEADER CON TIPOGRAFÍA IGUAL AL INDEX - VOLVER EN BLANCO -->
+<header class="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-[#0d0d0d]/80 border-b border-gray-800">
+    <nav class="w-full py-4 px-6 flex justify-between items-center max-w-7xl mx-auto">
+        
+        <a href="index.html" class="text-white hover:text-[#C084FC] transition-colors text-lg font-semibold" style="font-family: 'Gentium Book Plus', serif;">
+            <i class="fas fa-arrow-left mr-2"></i>
+            <span class="lang-es">Volver</span>
+            <span class="lang-en hidden">Back</span>
+        </a>
+        
+        <!-- Título del proyecto (oculto en mobile para no saturar) -->
+        <span class="text-white hover:text-[#C084FC] transition-colors text-lg font-semibold" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Google Merch Store</span>
+            <span class="lang-en hidden">Google Merch Store</span>
+        </span>
+        
+        <!-- Botón de menú mobile (hamburguesa) -->
+        <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-[#C084FC] text-2xl">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- Botón de idioma (solo desktop) -->
+        <button id="lang-toggle" 
+                class="hidden md:flex text-white hover:text-[#C084FC] text-sm px-4 py-1.5 rounded-full border border-white/30 hover:border-[#C084FC] transition-all duration-300 items-center gap-2 bg-white/5 backdrop-blur-sm">
+            <span class="lang-es flex items-center gap-2">
+                <img src="assets/images/flag-usa.png" alt="USA flag" class="w-4 h-3 inline-block object-cover">
+                <span>English</span>
+            </span>
+            <span class="lang-en hidden flex items-center gap-2">
+                <img src="assets/images/flag-spain.png" alt="Spain flag" class="w-4 h-3 inline-block object-cover">
+                <span>Español</span>
+            </span>
+        </button>
+        
+    </nav>
+
+    <!-- Menú mobile (desplegable) -->
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0d0d0d]/95 backdrop-blur-md border-t border-gray-800 py-4 px-6">
+        <div class="flex flex-col items-center space-y-4">
+            
+            <!-- Botón de idioma dentro del menú mobile -->
+            <button id="mobile-lang-toggle" 
+                    class="text-white hover:text-[#C084FC] text-sm px-4 py-1.5 rounded-full border border-white/30 hover:border-[#C084FC] transition-all duration-300 flex items-center gap-2 bg-white/5 backdrop-blur-sm mx-auto">
+                <span class="lang-es flex items-center gap-2">
+                    <img src="assets/images/flag-usa.png" alt="USA flag" class="w-4 h-3 inline-block object-cover">
+                    <span>English</span>
+                </span>
+                <span class="lang-en hidden flex items-center gap-2">
+                    <img src="assets/images/flag-spain.png" alt="Spain flag" class="w-4 h-3 inline-block object-cover">
+                    <span>Español</span>
+                </span>
+            </button>
+            
+            <!-- Título del proyecto en mobile -->
+            <span class="text-gray-300 text-sm tech-font pt-2 border-t border-gray-800 w-full text-center">
+                <span class="lang-es">Google Merch Store</span>
+                <span class="lang-en hidden">Google Merch Store</span>
+            </span>
+        </div>
+    </div>
+</header>
+
+<main class="relative z-10 pt-24 pb-16 px-4 max-w-7xl mx-auto min-h-screen">
+    
+    <!-- TÍTULO -->
+    <div class="mb-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-[#A78BFA] mb-4" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Google Merch Store</span>
+            <span class="lang-en hidden">Google Merch Store</span>
+        </h1>
+        <p class="text-gray-400 text-lg max-w-3xl mx-auto" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">
+                Análisis de conversión, productos y fuentes de tráfico en tienda online.
+            </span>
+            <span class="lang-en hidden">
+                Conversion, product and traffic source analysis for online store.
+            </span>
+        </p>
+    </div>
+    
+    <!-- DASHBOARD INTERACTIVO -->
+    <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-2xl border border-[#A78BFA]/20 p-4 mb-8">
+        <div class="w-full h-[600px] bg-gray-950 rounded-xl overflow-hidden">
+            <iframe 
+                src="https://lookerstudio.google.com/embed/reporting/193a96e8-3700-4867-a282-2002787934c3/page/p_9e24h20n0d" 
+                frameborder="0" 
+                style="border:0; width: 100%; height: 100%;" 
+                allowfullscreen 
+                sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+            </iframe>
+        </div>
+    </div>
+    
+    <!-- CONTENIDO DE 2 COLUMNAS -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- COLUMNA IZQUIERDA (DESCRIPCIÓN) -->
+        <div class="lg:col-span-2 bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800 p-6">
+            <h2 class="text-2xl font-semibold text-[#A78BFA] mb-4" style="font-family: 'Gentium Book Plus', serif;">
+                <span class="lang-es">Descripción del proyecto</span>
+                <span class="lang-en hidden">Project description</span>
+            </h2>
+            
+            <div class="space-y-4 text-gray-300" style="font-family: 'Gentium Book Plus', serif;">
+                <p>
+    <span class="lang-es">
+        Este dashboard analiza el rendimiento de <strong class="text-white">Google Merch Store</strong>, 
+        una tienda online que vende productos de la marca Google. Utilizando la cuenta demo de Google Analytics 4, 
+        se exploran métricas clave de comportamiento de usuarios, conversiones y rendimiento de productos.
+        El objetivo es comprender cómo los usuarios interactúan con el sitio, qué productos generan más interés 
+        y en qué etapas del proceso de compra se producen las mayores pérdidas. A través de visualizaciones claras, 
+        el dashboard permite identificar patrones de navegación, comparar el rendimiento de diferentes categorías 
+        de productos y evaluar la efectividad de las fuentes de tráfico. La información está organizada para que 
+        cualquier persona, sin importar su nivel técnico, pueda extraer conclusiones útiles para la toma de decisiones.
+    </span>
+    <span class="lang-en hidden">
+        This dashboard analyzes the performance of <strong class="text-white">Google Merch Store</strong>,
+        an online store selling Google-branded products. Using the Google Analytics 4 demo account,
+        it explores key user behavior metrics, conversions, and product performance.
+        The goal is to understand how users interact with the site, which products generate the most interest,
+        and at which stages of the purchase process the biggest drop-offs occur. Through clear visualizations,
+        the dashboard allows identifying navigation patterns, comparing performance across product categories,
+        and evaluating the effectiveness of traffic sources. The information is organized so that anyone,
+        regardless of their technical level, can draw useful conclusions for decision-making.
+    </span>
+</p>
+                
+                <h3 class="text-xl font-semibold text-[#A78BFA] mt-6">
+                    <span class="lang-es">Objetivos del análisis:</span>
+                    <span class="lang-en hidden">Analysis objectives:</span>
+                </h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-400">
+                    <li class="lang-es">Identificar patrones de navegación y comportamiento de usuarios.</li>
+                    <li class="lang-en hidden">Identify user navigation patterns and behavior.</li>
+                    <li class="lang-es">Analizar el funnel de conversión y detectar puntos de abandono.</li>
+                    <li class="lang-en hidden">Analyze conversion funnel and detect drop-off points.</li>
+                    <li class="lang-es">Evaluar el rendimiento de productos y categorías.</li>
+                    <li class="lang-en hidden">Evaluate product and category performance.</li>
+                    <li class="lang-es">Medir el impacto de campañas de marketing (fuentes de tráfico).</li>
+                    <li class="lang-en hidden">Measure marketing campaign impact (traffic sources).</li>
+                </ul>
+                
+                <h3 class="text-xl font-semibold text-[#A78BFA] mt-6">
+                    <span class="lang-es">Tecnologías utilizadas:</span>
+                    <span class="lang-en hidden">Technologies used:</span>
+                </h3>
+                <div class="flex flex-wrap gap-2 mt-2">
+                    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+        Google Analytics 4
+    </span>
+                    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">Looker Studio</span>
+                    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">Data Visualization</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- COLUMNA DERECHA (MÉTRICAS CLAVE) -->
+        <div class="bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800 p-6">
+            <h2 class="text-xl font-semibold text-[#A78BFA] mb-4" style="font-family: 'Gentium Book Plus', serif;">
+                <span class="lang-es">KPIs principales</span>
+                <span class="lang-en hidden">Main KPIs</span>
+            </h2>
+            
+            <div class="space-y-4">
+    <div class="flex justify-between items-center pb-2 border-b border-gray-800">
+        <span class="text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Usuarios</span>
+            <span class="lang-en hidden">Users</span>
+        </span>
+    </div>
+    <div class="flex justify-between items-center pb-2 border-b border-gray-800">
+        <span class="text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Sesiones</span>
+            <span class="lang-en hidden">Sessions</span>
+        </span>
+    </div>
+    <div class="flex justify-between items-center pb-2 border-b border-gray-800">
+        <span class="text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Tasa de conversión</span>
+            <span class="lang-en hidden">Conversion rate</span>
+        </span>
+    </div>
+    <div class="flex justify-between items-center pb-2 border-b border-gray-800">
+        <span class="text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Ingresos</span>
+            <span class="lang-en hidden">Revenue</span>
+        </span>
+    </div>
+    <div class="flex justify-between items-center">
+        <span class="text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Transacciones</span>
+            <span class="lang-en hidden">Transactions</span>
+        </span>
+    </div>
+</div>
+            
+            <div class="mt-6 pt-4 border-t border-gray-800">
+                <a href="https://lookerstudio.google.com/reporting/193a96e8-3700-4867-a282-2002787934c3" 
+                   target="_blank"
+                   class="inline-flex items-center gap-2 text-[#A78BFA] hover:text-[#C084FC] transition-colors" style="font-family: 'Gentium Book Plus', serif;">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span class="lang-es">Abrir en Looker Studio</span>
+                    <span class="lang-en hidden">Open in Looker Studio</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+</main>
+
+<!-- FOOTER IDÉNTICO AL INDEX -->
+<footer class="text-center py-10">
+
+    <p class="text-sm mb-2 text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+        &copy; <span id="current-year"></span> Rocio Robledo
+    </p>
+
+    <p class="text-xs text-gray-500 mb-6" style="font-family: 'Gentium Book Plus', serif;">
+        <span class="lang-es">Análisis de datos · Analítica Digital </span>
+        <span class="lang-en hidden">Data Analytics · Digital Analytics </span>
+    </p>
+
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // --- 1. Año automático en footer ---
+    const yearElements = document.querySelectorAll('#current-year, #current-year-en');
+    const currentYear = new Date().getFullYear();
+    yearElements.forEach(el => el.textContent = currentYear);
+
+    // --- 2. Cambio de idioma ES / EN ---
+    const langToggle = document.getElementById('lang-toggle');
+    const htmlElement = document.documentElement;
+
+    function setLanguage(lang) {
+        document.querySelectorAll('.lang-es').forEach(el =>
+            el.classList.toggle('hidden', lang !== 'es')
+        );
+        document.querySelectorAll('.lang-en').forEach(el =>
+            el.classList.toggle('hidden', lang !== 'en')
+        );
+        htmlElement.lang = lang;
+        localStorage.setItem('preferredLang', lang);
+    }
+
+    const storedLang = localStorage.getItem('preferredLang') || 'es';
+    setLanguage(storedLang);
+
+    if (langToggle) {
+        langToggle.addEventListener('click', () => {
+            const newLang = htmlElement.lang === 'es' ? 'en' : 'es';
+            setLanguage(newLang);
+        });
+    }
+
+});
+</script>
+
+<!-- Scripts del fondo -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="assets/js/liquid-ether.js" defer></script>
+
+</body>
+</html>

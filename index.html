@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title -->
+    <title>Rocio Robledo | Administration - Data & Digital Analyst Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- SEO -->
+    <meta name="description" content="Rocio Robledo - Administrativa - Data & Digital Analyst con foco en analítica digital, visualización de datos y toma de decisiones basada en datos. Experiencia en GA4 y GTM, Looker Studio, Excel, Power BI y proyectos de análisis aplicados a negocio.">
+    <meta name="keywords" content="analista de datos, data analyst, digital analytics, GA4, GTM, Looker Studio, Power BI, SQL, Python, analytics portfolio, business intelligence, Argentina">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/liquid-ether.css">
+    <link rel="stylesheet" href="dist/output.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Google Analytics-->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-16XTE09HYS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-16XTE09HYS');
+    </script>
+</head>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+// ===========================================
+// NAVEGACIÓN ACTIVA - VIOLETA FLÚO AL HACER CLICK
+// ===========================================
+
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = {
+    'inicio': document.getElementById('inicio'),
+    'sobre-mi': document.getElementById('sobre-mi'),
+    'proyectos': document.getElementById('proyectos'),
+    'contacto': document.getElementById('contacto')
+};
+
+// Función para remover active de todos
+function removeActiveClass() {
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        link.style.color = '';
+        link.style.textShadow = '';
+    });
+}
+
+// Función para activar link por ID de sección
+function setActiveLink(sectionId) {
+    removeActiveClass();
+    
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && href === `#${sectionId}`) {
+            link.classList.add('active');
+            link.style.color = '#c084fc';
+            link.style.textShadow = '0 0 10px #a855f7, 0 0 20px #a855f7, 0 0 30px #9333ea';
+        }
+    });
+}
+
+// ===========================================
+// NAVEGACIÓN CON MEMORIA DE CLICK
+// ===========================================
+
+let lastClickedSection = null;
+let clickTimer = null;
+
+// AGREGAR EVENTO CLICK A CADA LINK (UNA SOLA VEZ)
+navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        
+        if (href && href.startsWith('#')) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const sectionId = href.substring(1);
+            const targetSection = document.getElementById(sectionId);
+            
+            if (targetSection) {
+                // Guardar que esta sección fue clickeada
+                lastClickedSection = sectionId;
+                
+                // Limpiar timer anterior
+                if (clickTimer) clearTimeout(clickTimer);
+                
+                // Resetear después de 2 segundos
+                clickTimer = setTimeout(() => {
+                    lastClickedSection = null;
+                }, 2000);
+                
+                setActiveLink(sectionId);
+                
+                // Scroll con offset
+                setTimeout(() => {
+                    const yOffset = -60;
+                    const y = targetSection.getBoundingClientRect().top + window.scrollY + yOffset;
+                    
+                    window.scrollTo({
+                        top: y,
+                        behavior: 'smooth'
+                    });
+                }, 10);
+                
+                // Cerrar menú mobile
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            }
+        }
+    });
+});
+
+// ===========================================
+// DETECTAR SECCIÓN ACTIVA AL HACER SCROLL
+// ===========================================
+function updateActiveSectionOnScroll() {
+    // Si hay una sección clickeada recientemente, no cambiar
+    if (lastClickedSection) {
+        return;
+    }
+    
+    const scrollPosition = window.scrollY + 200;
+    
+    // Verificar si estamos en contacto (prioridad)
+    const contacto = document.getElementById('contacto');
+    if (contacto && scrollPosition >= contacto.offsetTop - 100) {
+        setActiveLink('contacto');
+        return;
+    }
+    
+    for (const [sectionId, section] of Object.entries(sections)) {
+        if (section) {
+            const sectionTop = section.offsetTop;
+            const sectionBottom = sectionTop + section.offsetHeight;
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                setActiveLink(sectionId);
+                break;
+            }
+        }
+    }
+}
+
+// Escuchar scroll
+window.addEventListener('scroll', updateActiveSectionOnScroll);
+
+// Activar sección inicial al cargar
+setTimeout(() => {
+    updateActiveSectionOnScroll();
+}, 100);
+
+// ===========================================
+// CORREGIR IDs DE SECCIONES
+// ===========================================
+if (!document.getElementById('contacto')) {
+    const footer = document.querySelector('footer');
+    if (footer) footer.id = 'contacto';
+}
+    
+    // ===========================================
+    // EFECTO VIOLETA FLÚO PARA BOTÓN DE IDIOMA
+    // ===========================================
+    
+    const langToggleNav = document.getElementById('lang-toggle-nav');
+    if (langToggleNav) {
+        langToggleNav.addEventListener('click', function() {
+            removeActiveClass();
+            this.classList.add('active');
+            this.style.color = '#c084fc';
+            this.style.textShadow = '0 0 10px #a855f7, 0 0 20px #a855f7, 0 0 30px #9333ea';
+            
+            // Cambiar idioma (usando tu función existente)
+            const htmlElement = document.documentElement;
+            const newLang = htmlElement.lang === 'es' ? 'en' : 'es';
+            
+            // Llamar a tu función de cambio de idioma
+            if (typeof setLanguage === 'function') {
+                setLanguage(newLang);
+            } else {
+                // Fallback si no existe la función
+                document.querySelectorAll('.lang-es').forEach(el => 
+                    el.classList.toggle('hidden', newLang !== 'es')
+                );
+                document.querySelectorAll('.lang-en').forEach(el => 
+                    el.classList.toggle('hidden', newLang !== 'en')
+                );
+                htmlElement.lang = newLang;
+                localStorage.setItem('preferredLang', newLang);
+            }
+        });
+    }
+    
+});
+</script>
+
+<body class="preload bg-[#0d0d0d]">
+
+<!-- Script para navegación con violeta flúo - VERSIÓN CORREGIDA -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // ===========================================
+    // NAVEGACIÓN - UN SOLO ACTIVO A LA VEZ
+    // ===========================================
+    
+    // ... todo ese bloque ...
+    
+});
+</script>
+
+    <!-- Styles adicionales para navegación violeta flúo -->
+    <style>
+    /* ESTILOS PARA NAVEGACIÓN - VERSIÓN LIMPIA */
+    .nav-link {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    /* Hover - violeta flúo */
+    .nav-link:hover {
+        color: #c084fc !important;
+        text-shadow: 0 0 10px #a855f7, 0 0 20px #a855f7 !important;
+    }
+    
+    /* Active state - violeta flúo persistente */
+    .nav-link.active {
+        color: #c084fc !important;
+        text-shadow: 0 0 10px #a855f7, 0 0 20px #a855f7 !important;
+        font-weight: 600;
+    }
+    
+    /* Para móviles - sin hover, solo active */
+    @media (hover: none) {
+        .nav-link:active {
+            color: #c084fc !important;
+            text-shadow: 0 0 10px #a855f7 !important;
+        }
+    }
+    
+    /* Resetear estilos de Tailwind si interfieren */
+    .text-gray-300.nav-link.active {
+        color: #c084fc !important;
+    }
+    
+    /* Asegurar que el loader no bloquee */
+    #data-loader {
+        display: none !important;
+    }
+    
+    #page-content {
+        display: block !important;
+    }
+</style>
+
+<!-- Loader -->
+<div id="data-loader">
+    <div class="data-loader-content">
+        <div class="loader-logo">RR</div>
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        <div class="loading-text">
+            <span class="lang-es">Cargando...</span>
+            <span class="lang-en">Loading...</span>
+        </div>
+    </div>
+</div>
+
+<!-- Fondo animado -->
+<div id="liquid-background" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0;"></div>
+
+<main id="page-content" class="flex-grow relative z-10 hidden">
+
+<!-- Barra lateral
+<div class="fixed left -6 top-1/2 -translate-y-1/2 p-4 hidden md:flex flex-col items-center space-y-6 z-50"> <div class="w-px h-24 bg-gray-600"></div> <a href="https://www.linkedin.com/in/rociomalenrobledo/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition duration-200"> <i class="fab fa-linkedin text-2xl"></i> </a> <a href="https://github.com/rociorobledo" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition duration-200"> <i class="fab fa-github text-2xl"></i> </a> <a href="mailto:robledorociomalen@gmail.com" class="text-gray-400 hover:text-white transition duration-200"> <i class="fas fa-envelope text-2xl"></i> </a> <div class="w-px h-32 bg-gray-600"></div> </div>
+--> 
+
+<!-- Header / Barra horizontal fija -->
+<header class="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-[#0d0d0d]/80 border-b border-gray-800">
+  <nav class="w-full py-4 px-6 flex justify-center items-center">
+    
+    <div class="flex gap-8 md:gap-12 text-gray-300 text-sm sm:text-base font-medium items-center">
+      
+      <a href="#inicio" 
+         class="nav-link text-gray-300 hover:text-[#c084fc] transition-all duration-300 px-2 py-1">
+        <span class="lang-es">Inicio</span>
+        <span class="lang-en hidden">Home</span>
+      </a>
+      
+      <a href="#proyectos" 
+         class="nav-link text-gray-300 hover:text-[#c084fc] transition-all duration-300 px-2 py-1">
+        <span class="lang-es">Proyectos</span>
+        <span class="lang-en hidden">Projects</span>
+      </a>
+
+      <a href="#sobre-mi" 
+         class="nav-link text-gray-300 hover:text-[#c084fc] transition-all duration-300 px-2 py-1">
+        <span class="lang-es">Sobre mí</span>
+        <span class="lang-en hidden">About me</span>
+      </a>
+      
+      <a href="#contacto" 
+         class="nav-link text-gray-300 hover:text-[#c084fc] transition-all duration-300 px-2 py-1">
+        <span class="lang-es">Contacto</span>
+        <span class="lang-en hidden">Contact</span>
+      </a>
+      
+     <!-- BOTÓN DE IDIOMA -->
+<button id="lang-toggle" 
+        class="text-white hover:text-[#C084FC] text-sm px-4 py-1.5 rounded-full border border-white/30 hover:border-[#C084FC] transition-all duration-300 flex items-center gap-2 bg-white/5 backdrop-blur-sm">
+  <span class="lang-es flex items-center gap-2">
+    <img src="assets/images/flag-usa.png" alt="USA flag" class="w-4 h-3 inline-block object-cover">
+    <span>English</span>
+  </span>
+  <span class="lang-en hidden flex items-center gap-2">
+    <img src="assets/images/flag-spain.png" alt="Spain flag" class="w-4 h-3 inline-block object-cover">
+    <span>Español</span>
+  </span>
+</button>      
+    </div>
+    
+  </nav>
+</header>
+
+<!-- Menú mobile -->
+<div id="mobile-menu" class="hidden md:hidden fixed top-16 left-0 w-full bg-[#0d0d0d]/95 backdrop-blur-md shadow-lg py-4 z-40 border-b border-gray-800">
+  <ul class="flex flex-col items-center space-y-4">
+    <li>
+      <a href="#inicio" class="nav-link block py-2 text-gray-300 hover:text-[#c084fc] transition duration-200">
+        <span class="lang-es">Inicio</span>
+        <span class="lang-en hidden">Home</span>
+      </a>
+    </li>
+    <li>
+      <a href="#sobre-mi" class="nav-link block py-2 text-gray-300 hover:text-[#c084fc] transition duration-200">
+        <span class="lang-es">Sobre mí</span>
+        <span class="lang-en hidden">About me</span>
+      </a>
+    </li>
+    <li>
+      <a href="#proyectos" class="nav-link block py-2 text-gray-300 hover:text-[#c084fc] transition duration-200">
+        <span class="lang-es">Proyectos</span>
+        <span class="lang-en hidden">Projects</span>
+      </a>
+    </li>
+    <li>
+      <a href="#contacto" class="nav-link block py-2 text-gray-300 hover:text-[#c084fc] transition duration-200">
+        <span class="lang-es">Contacto</span>
+        <span class="lang-en hidden">Contact</span>
+      </a>
+    </li>
+  </ul>
+  <div class="mt-4 text-center pb-4">
+    
+<!-- BOTÓN MOBILE -->
+    <button id="mobile-lang-toggle" 
+        class="text-white hover:text-[#C084FC] text-sm px-4 py-1.5 rounded-full border border-white/30 hover:border-[#C084FC] transition-all duration-300 flex items-center gap-2 bg-white/5 backdrop-blur-sm mx-auto">
+  <span class="lang-es flex items-center gap-2">
+    <img src="assets/images/flag-usa.png" alt="USA flag" class="w-4 h-3 inline-block object-cover">
+    <span>English</span>
+  </span>
+  <span class="lang-en hidden flex items-center gap-2">
+    <img src="assets/images/flag-spain.png" alt="Spain flag" class="w-4 h-3 inline-block object-cover">
+    <span>Español</span>
+  </span>
+</button>
+  </div>
+</div>
+</header>
+
+<!-- Inicio Section - SIN ESPACIO VACÍO -->
+<section id="inicio" class="pt-20 md:pt-16 relative flex items-center justify-center min-h-screen bg-stars bg-cover bg-center text-white overflow-hidden">
+    
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- CONTENEDOR FLEX PARA TEXTO + FOTO -->
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-12">
+            
+            <!-- COLUMNA IZQUIERDA - TEXTO -->
+            <div class="w-full lg:w-1/2 text-center lg:text-left">
+                
+                <!-- NOMBRE -->
+               <h1 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 leading-tight whitespace-nowrap" style="font-family: 'Gentium Book Plus', serif;">
+    <span class="lang-es">Hola, soy <span class="text-[#A78BFA] typewriter" style="font-family: 'Gentium Book Plus', serif; font-weight: 700">Rocio Robledo</span></span>
+    <span class="lang-en hidden">Hi, I'm <span class="text-[#A78BFA] typewriter" style="font-family: 'Gentium Book Plus', serif; font-weight: 700">Rocio Robledo</span></span>
+</h1>
+
+                <!-- ROL -->
+                <p class="text-xl sm:text-2xl lg:text-3xl text-gray-300 mb-3 font-light">
+                    <span class="lang-es">Administrativa - Data & Digital Analyst</span>
+                    <span class="lang-en hidden">Administrative - Data & Digital Analyst</span>
+                </p>
+
+                <!-- DESCRIPCIÓN PRINCIPAL -->
+                <p class="text-base sm:text-lg md:text-xl text-white max-w-2xl mb-5 leading-relaxed mx-auto lg:mx-0">
+                    <span class="lang-es">
+                        Analizo datos para transformar información en insights accionables,
+                        optimizar decisiones y generar impacto real.
+                    </span>
+                    <span class="lang-en hidden">
+                        I analyze data to turn information into actionable insights,
+                        optimize decision-making, and create real impact.
+                    </span>
+                </p>
+                
+               <!-- SKILLS - VIOLETA TRANSLÚCIDO CON BRILLO -->
+<div class="flex flex-wrap justify-center lg:justify-start gap-2 max-w-2xl mx-auto lg:mx-0">
+    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+        GA4 + GTM
+    </span>
+    
+    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+        Looker Studio
+    </span>
+    
+    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+        Excel
+    </span>
+    
+    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+        Power BI
+    </span>
+    
+    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+        SQL
+    </span>
+    
+    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+        Python
+    </span>
+    
+    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+        Data Modeling
+    </span>
+    
+    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+        Data Visualization
+    </span>
+    
+    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+        Digital Analytics
+    </span>
+    
+    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+        Storytelling
+    </span>
+</div>
+                
+            </div> <!-- FIN COLUMNA IZQUIERDA -->
+            
+           <!-- COLUMNA DERECHA - FOTO CON BADGE ARRIBA -->
+<div class="w-full lg:w-1/2 flex flex-col items-center justify-center mt-4 lg:mt-0">
+    
+    <!-- BADGE - CENTRADO ARRIBA DE LA FOTO -->
+    <div class="inline-flex items-center 
+            bg-white/5 text-white text-xs sm:text-sm 
+            font-medium px-5 py-1.5 rounded-full 
+            border border-white/30 shadow-md z-30
+            whitespace-nowrap backdrop-blur-md mb-4
+            animate-pulse-glow">
+    <span class="w-2 h-2 bg-[#A78BFA] rounded-full mr-2 animate-ping-slow"></span>
+    <span class="lang-es">Disponible para proyectos y oportunidades</span>
+    <span class="lang-en hidden">Open to projects & opportunities</span>
+</div>
+
+<style>
+@keyframes pulse-glow {
+    0%, 100% { border-color: rgba(255,255,255,0.3); box-shadow: 0 0 10px rgba(167,139,250,0.2); }
+    50% { border-color: #A78BFA; box-shadow: 0 0 20px #A78BFA; }
+}
+.animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+</style>
+                
+                <!-- FOTO - TAMAÑO REDUCIDO PARA QUE ENTRE COMPLETA -->
+                <div class="relative">
+                    <div class="absolute -inset-3 bg-[#A78BFA]/20 blur-xl rounded-full"></div>
+                    <!-- Foto - TAMAÑO REDUCIDO -->
+                    <img src="assets/images/foto.png"
+                         alt="Rocio Robledo"
+                         class="relative w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 xl:w-80 xl:h-80 object-cover rounded-full border-4 border-[#A855F7] shadow-[0_0_15px_#A855F7]">
+                </div>
+            </div> <!-- FIN COLUMNA DERECHA -->
+            
+        </div> <!-- FIN FLEX CONTAINER -->
+        
+    </div> <!-- FIN CONTAINER -->
+    
+</section>
+<!-- FIN SECCIÓN INICIO -->
+
+<!-- Separador visual -->
+<div class="w-full h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent mt-8"></div>
+
+<!-- =========================================== -->
+<!-- SECCIÓN PROYECTOS - SIN ESPACIOS           -->
+<!-- =========================================== -->
+<section id="proyectos" class="pt-4 pb-0 bg-transparent text-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+
+        <!-- TÍTULO -->
+        <h2 class="text-2xl sm:text-3xl font-bold text-center mb-4 relative pb-3">
+            <span class="lang-es">Proyectos</span>
+            <span class="lang-en hidden">Projects</span>
+        </h2>
+
+        <!-- GRILLA 3 COLUMNAS -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 xl:gap-5">
+            
+            <!-- ======================================= -->
+            <!-- PROYECTO 1 - GOOGLE MERCH STORE        -->
+            <!-- ======================================= -->
+            <div class="bg-gray-900/60 backdrop-blur-sm rounded-xl border border-gray-800 hover:border-violet-500/50 transition-all duration-300 overflow-hidden group flex flex-col" style="height: 390px !important;">
+                
+                <div class="w-full h-[270px] bg-gray-950 overflow-hidden" style="line-height: 0;">
+                    <iframe 
+                        src="https://lookerstudio.google.com/embed/reporting/193a96e8-3700-4867-a282-2002787934c3/page/p_9e24h20n0d" 
+                        frameborder="0" 
+                        style="border:0; width: 100%; height: 270px; display: block;" 
+                        allowfullscreen 
+                        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+                    </iframe>
+                </div>
+          <a href="google-merch-store.html" class="block group">
+                <div class="p-4 flex flex-col flex-grow">
+                    <h3 class="text-base font-semibold text-white mb-1 group-hover:text-violet-400 transition-colors">
+                        <span class="lang-es">Ecommerce Google Merch Shop</span>
+                        <span class="lang-en hidden">Ecommerce Google Merch Shop</span>
+                    </h3>
+          </a>           
+                    <!-- DESCRIPCIÓN + SKILLS SIN ESPACIO -->
+                    <div class="flex flex-col flex-grow">
+                        <p class="text-gray-400 text-[11px] leading-relaxed mb-0">
+                            <span class="lang-es">
+                                Análisis de funnels de conversión y performance e-commerce con la cuenta demo de Google.
+                            </span>
+                            <span class="lang-en hidden">
+                               Conversion funnel and e-commerce performance analysis using Google demo account.
+                            </span>
+                        </p>
+                        
+                        <!-- SKILLS - PEGADOS INMEDIATAMENTE -->
+                        <div class="flex flex-wrap gap-1 mt-1">
+                            <span class="skill-pill text-[10px] px-2 py-0.5 rounded-full bg-gray-800/80 text-gray-300 border border-gray-700 hover:border-violet-500 hover:text-violet-400 hover:bg-gray-800 hover:scale-105 transition-all duration-300 cursor-default">
+                                GA4
+                            </span>
+                            <span class="skill-pill text-[10px] px-2 py-0.5 rounded-full bg-gray-800/80 text-gray-300 border border-gray-700 hover:border-violet-500 hover:text-violet-400 hover:bg-gray-800 hover:scale-105 transition-all duration-300 cursor-default">
+                                Looker Studio
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================================= -->
+            <!-- PROYECTO 2 - ANÁLISIS DEL TRÁFICO AÉREO -->
+            <!-- ======================================= -->
+            <div class="bg-gray-900/60 backdrop-blur-sm rounded-xl border border-gray-800 hover:border-violet-500/50 transition-all duration-300 overflow-hidden group flex flex-col" style="height: 390px !important;">
+                
+                <div class="w-full h-[270px] bg-gray-950 overflow-hidden">
+                    <img src="assets/images/traficoaereo.png" 
+                         alt="Air Traffic Analysis"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+               <a href="air-traffic-analysis.html" class="block group"> 
+                <div class="p-4 flex flex-col flex-grow">
+                    <h3 class="text-base font-semibold text-white mb-1 group-hover:text-violet-400 transition-colors">
+                        <span class="lang-es">Análisis del Tráfico Aéreo</span>
+                        <span class="lang-en hidden">Air Traffic Analysis</span>
+                    </h3>
+                </a>    
+                    <div class="flex flex-col flex-grow">
+                        <p class="text-gray-400 text-[11px] leading-relaxed mb-0">
+                            <span class="lang-es">
+                                Análisis de tráfico aéreo y evolución de aerolíneas utilizando la base de datos pública de transporte aéreo de pasajeros en la Argentina.
+                            </span>
+                            <span class="lang-en hidden">
+                                Air traffic and airline evolution analysis using public passenger air transport database from Argentina (SIAC).
+                            </span>
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-1 mt-1">
+                            <span class="skill-pill text-[10px] px-2 py-0.5 rounded-full bg-gray-800/80 text-gray-300 border border-gray-700 hover:border-violet-500 hover:text-violet-400 hover:bg-gray-800 hover:scale-105 transition-all duration-300 cursor-default">
+                                Excel
+                            </span>
+                            <span class="skill-pill text-[10px] px-2 py-0.5 rounded-full bg-gray-800/80 text-gray-300 border border-gray-700 hover:border-violet-500 hover:text-violet-400 hover:bg-gray-800 hover:scale-105 transition-all duration-300 cursor-default">
+                                Power Query
+                            </span>
+                            <span class="skill-pill text-[10px] px-2 py-0.5 rounded-full bg-gray-800/80 text-gray-300 border border-gray-700 hover:border-violet-500 hover:text-violet-400 hover:bg-gray-800 hover:scale-105 transition-all duration-300 cursor-default">
+                                Modelado de datos
+                            </span>
+                            <span class="skill-pill text-[10px] px-2 py-0.5 rounded-full bg-gray-800/80 text-gray-300 border border-gray-700 hover:border-violet-500 hover:text-violet-400 hover:bg-gray-800 hover:scale-105 transition-all duration-300 cursor-default">
+                                Power BI
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================================= -->
+            <!-- PROYECTO 3 - RECORRIDO DEL USUARIO     -->
+            <!-- ======================================= -->
+            <div class="bg-gray-900/60 backdrop-blur-sm rounded-xl border border-gray-800 hover:border-violet-500/50 transition-all duration-300 overflow-hidden group flex flex-col" style="height: 390px !important;">
+                
+                <div class="w-full h-[270px] bg-gray-950 overflow-hidden" style="line-height: 0;">
+                    <iframe 
+                        src="https://lookerstudio.google.com/embed/reporting/9d36ae98-b78e-420f-ac0f-4e6cd99e784b/page/p_2vc7ofev0d" 
+                        frameborder="0" 
+                        style="border:0; width: 100%; height: 270px; display: block;" 
+                        allowfullscreen 
+                        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+                    </iframe>
+                </div>
+          <a href="user-journey.html" class="block group">      
+                <div class="p-4 flex flex-col flex-grow">
+                    <h3 class="text-base font-semibold text-white mb-1 group-hover:text-violet-400 transition-colors">
+                        <span class="lang-es">Análisis del Recorrido del Usuario</span>
+                        <span class="lang-en hidden">User Journey Performance Analysis</span>
+                    </h3>
+            </a>        
+                    <div class="flex flex-col flex-grow">
+                        <p class="text-gray-400 text-[11px] leading-relaxed mb-0">
+                            <span class="lang-es">
+                                Análisis de comportamiento de usuarios, detección de puntos de abandono y optimización con la cuenta demo de Google.
+                            </span>
+                            <span class="lang-en hidden">
+                                User behavior, drop-off detection and optimization using Google demo account.
+                            </span>
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-1 mt-1">
+                            <span class="skill-pill text-[10px] px-2 py-0.5 rounded-full bg-gray-800/80 text-gray-300 border border-gray-700 hover:border-violet-500 hover:text-violet-400 hover:bg-gray-800 hover:scale-105 transition-all duration-300 cursor-default">
+                                GA4
+                            </span>
+                            <span class="skill-pill text-[10px] px-2 py-0.5 rounded-full bg-gray-800/80 text-gray-300 border border-gray-700 hover:border-violet-500 hover:text-violet-400 hover:bg-gray-800 hover:scale-105 transition-all duration-300 cursor-default">
+                                Looker Studio
+                            </span>
+                            <span class="skill-pill text-[10px] px-2 py-0.5 rounded-full bg-gray-800/80 text-gray-300 border border-gray-700 hover:border-violet-500 hover:text-violet-400 hover:bg-gray-800 hover:scale-105 transition-all duration-300 cursor-default">
+                                Storytelling
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROYECTOS PLANNED (sin cambios, misma estructura compacta) -->
+            <!-- ... (mantener los 3 proyectos planned con misma altura 430px) ... -->
+
+        </div>
+
+        <!-- BOTÓN GITHUB -->
+        <div class="text-center mt-10">
+            <a href="https://github.com/rociorobledo" 
+               target="_blank" 
+               class="inline-flex items-center gap-2 px-5 py-2 bg-gray-800/80 hover:bg-gray-700 text-white rounded-full border border-gray-700 hover:border-violet-500 transition-all duration-300 hover:scale-105 text-xs">
+                <i class="fab fa-github text-base"></i>
+                <span>GitHub</span>
+                <i class="fas fa-arrow-right text-[10px] opacity-70"></i>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<!-- ESTILOS - SIN ESPACIOS -->
+<style>
+    /* Iframes sin espacio */
+    iframe {
+        display: block;
+        vertical-align: bottom;
+        width: 100% !important;
+        height: 100% !important;
+    }
+    
+    /* Cards altura compacta */
+    #proyectos .grid > div {
+        height: 430px;
+    }
+    
+    /* Skills ultra compactos */
+    .skill-pill {
+        display: inline-block;
+        font-weight: 500;
+        letter-spacing: 0.2px;
+        cursor: default;
+        user-select: none;
+        backdrop-filter: blur(4px);
+        transition: all 0.2s ease;
+        line-height: 1.2;
+    }
+    
+    .skill-pill:hover {
+        border-color: #8b5cf6;
+        color: #c084fc;
+        background: #1f2937;
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
+    
+    /* CERO espacio entre párrafo y skills */
+    .mb-0 {
+        margin-bottom: 0 !important;
+    }
+    
+    .mt-1 {
+        margin-top: 0.25rem !important;
+    }
+    
+    p:last-child {
+        margin-bottom: 0;
+    }
+    
+    /* Contenedor flex sin espacios extras */
+    .flex-col {
+        gap: 0;
+    }
+</style>
+
+<!-- Separador visual -->
+<div class="w-full h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent mt-8"></div>
+
+<!-- Sección sobre mí -->
+<section id="sobre-mi" class="pt-4 pb-0 bg-transparent text-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+
+        <!-- TÍTULO -->
+        <h2 class="text-2xl sm:text-3xl font-bold text-center mb-4 relative pb-3">
+            <span class="lang-es">Sobre mí</span>
+            <span class="lang-en hidden">About Me</span>
+        </h2>        
+
+        <div class="flex flex-col md:flex-row items-center md:space-x-10 bg-gray-800 bg-opacity-70 backdrop-blur-sm rounded-xl p-6 sm:p-8 shadow-lg border border-gray-700 mb-16">
+            
+           <!-- Foto -->
+<div class="md:w-1/3 mb-8 md:mb-0 flex flex-col items-center">
+    <div class="relative inline-block">
+        <!-- Efecto glow detrás de la foto -->
+        <div class="absolute -inset-2 bg-[#A855F7]/10 blur-lg rounded-full"></div>
+        <!-- Foto -->
+        <img src="assets/images/foto02.jpeg" 
+             alt="Rocio Robledo - Data Analyst" 
+             class="relative rounded-full shadow-xl w-48 h-48 sm:w-60 sm:h-60 object-cover border-2 border-[#A855F7] shadow-[0_0_10px_#A855F7]/70"
+             loading="lazy">
+    </div>
+    <p class="text-gray-300 text-base text-center mt-4 italic max-w-xs">
+        <span class="lang-es">"Transformo datos en decisiones claras, accionables y con impacto real."</span>
+        <span class="lang-en hidden">"I turn data into clear, actionable decisions with real impact."</span>
+    </p>
+</div>
+
+            <!-- Texto -->
+            <div class="md:w-2/3 text-gray-300 leading-relaxed text-lg text-center md:text-left">
+                <p class="mb-4">
+                    <span class="lang-es">
+                        Soy <strong>Técnica en Administración</strong>, Analista de Datos y Analista Digital.
+                    </span>
+                    <span class="lang-en hidden">
+                        I'm a <strong>Administration Technician</strong> and I'm training to be a Data Analyst and Digital Analyst.
+                </p>
+
+                <p class="mb-4">
+                    <span class="lang-es">
+                        Desarrollo dashboards y modelos analíticos utilizando 
+                        <span class="font-semibold text-[#A855F7]">Power BI</span>, 
+                        <span class="font-semibold text-[#A855F7]">Looker Studio</span>,
+                        <span class="font-semibold text-[#A855F7]">Google Analytics 4</span>,
+                        <span class="font-semibold text-[#A855F7]">Google Tag Manager</span>,
+                        <span class="font-semibold text-[#A855F7]">SQL</span> y 
+                        <span class="font-semibold text-[#A855F7]">Python</span>. 
+                        Me especializo en limpieza, modelado y visualización de datos orientados a métricas de negocio y performance.
+                    </span>
+                    <span class="lang-en hidden">
+                        I build dashboards and analytical models using 
+                        <span class="font-semibold text-[#A855F7]">Power BI</span>, 
+                        <span class="font-semibold text-[#A855F7]">Looker Studio</span>,
+                        <span class="font-semibold text-[#A855F7]">Google Analytics 4</span>,
+                        <span class="font-semibold text-[#A855F7]">Google Tag Manager</span>,
+                        <span class="font-semibold text-[#A855F7]">SQL</span>, and 
+                        <span class="font-semibold text-[#A855F7]">Python</span>. 
+                        I specialize in data cleaning, modeling, and visualization focused on business and performance metrics.
+                    </span>
+                </p>
+
+                <p>
+                    <span class="lang-es">
+                        Me interesa trabajar en proyectos donde los datos ayuden a mejorar la experiencia del usuario, la eficiencia operativa y la toma de decisiones basada en evidencia.
+                    </span>
+                    <span class="lang-en hidden">
+                        I’m interested in projects where data helps improve user experience, operational efficiency, and evidence-based decision-making.
+                    </span>
+                </p>
+            </div>
+        </div>
+
+<!-- Separador visual -->
+<div class="w-full h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent mt-8"></div>
+
+<!-- =========================================== -->
+<!-- SECCIÓN FORMACIÓN ACADÉMICA Y CURSOS       -->
+<!-- =========================================== -->
+<section id="formacion" class="pt-4 pb-0 bg-transparent text-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+
+        <!-- TÍTULO -->
+        <h2 class="text-2xl sm:text-3xl font-bold text-center mb-4 relative pb-3">
+            <span class="lang-es">Formación Académica</span>
+            <span class="lang-en hidden">Academic Background</span>
+        </h2>        
+
+        <!-- GRILLA 2 COLUMNAS -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            
+            <!-- ======================================= -->
+            <!-- COLUMNA IZQUIERDA - 3 CUADRADITOS      -->
+            <!-- ======================================= -->
+            <div class="grid grid-cols-1 gap-2">
+                
+                <!-- LICENCIATURA -->
+                <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-xl border border-[#A78BFA]/20 
+                            hover:border-[#A78BFA] hover:bg-[#A78BFA]/10 
+                            hover:shadow-[0_0_20px_rgba(167,139,250,0.3)]
+                            transition-all duration-300 p-3 flex flex-col h-[105px] justify-between">
+                    <div class="flex items-start gap-2">
+                        <div class="w-8 h-8 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-graduation-cap text-[#A78BFA] text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-semibold text-[#A78BFA] mb-0">
+                                <span class="lang-es">Licenciatura en Administración de Empresas</span>
+                                <span class="lang-en hidden">Bachelor's Degree in Business Administration</span>
+                            </h3>
+                            <p class="text-white text-xs font-medium">
+                                <span class="lang-es">Universidad Tecnológica Nacional (UTN)</span>
+                                <span class="lang-en hidden">National Technological University (UTN)</span>
+                            </p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-xs pl-10">
+                        <span class="lang-es">En curso</span>
+                        <span class="lang-en hidden">Currently enrolled</span>
+                    </p>
+                </div>
+                
+                <!-- DIPLOMATURA -->
+                <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-xl border border-[#A78BFA]/20 
+                            hover:border-[#A78BFA] hover:bg-[#A78BFA]/10 
+                            hover:shadow-[0_0_20px_rgba(167,139,250,0.3)]
+                            transition-all duration-300 p-3 flex flex-col h-[105px] justify-between">
+                    <div class="flex items-start gap-2">
+                        <div class="w-8 h-8 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-chart-line text-[#A78BFA] text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-semibold text-[#A78BFA] mb-0">
+                                <span class="lang-es">Diplomatura en Ciencia de Datos con R & Python</span>
+                                <span class="lang-en hidden">Diploma in Data Science with R & Python</span>
+                            </h3>
+                            <p class="text-white text-xs font-medium">
+                                <span class="lang-es">Instituto Data Science</span>
+                                <span class="lang-en hidden">Data Science Institute</span>
+                            </p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-xs pl-10">
+                        <span class="lang-es">En curso</span>
+                        <span class="lang-en hidden">Currently enrolled</span>
+                    </p>
+                </div>
+                
+                <!-- TECNICATURA -->
+                <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-xl border border-[#A78BFA]/20 
+                            hover:border-[#A78BFA] hover:bg-[#A78BFA]/10 
+                            hover:shadow-[0_0_20px_rgba(167,139,250,0.3)]
+                            transition-all duration-300 p-3 flex flex-col h-[105px] justify-between">
+                    <div class="flex items-start gap-2">
+                        <div class="w-8 h-8 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-university text-[#A78BFA] text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-semibold text-[#A78BFA] mb-0">
+                                <span class="lang-es">Tecnicatura Universitaria en Administración</span>
+                                <span class="lang-en hidden">University Technical Degree in Administration</span>
+                            </h3>
+                            <p class="text-white text-xs font-medium">
+                                <span class="lang-es">Universidad Tecnológica Nacional (UTN)</span>
+                                <span class="lang-en hidden">National Technological University (UTN)</span>
+                            </p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-xs pl-10">
+                        <span class="lang-es">Finalizada</span>
+                        <span class="lang-en hidden">Completed</span>
+                    </p>
+                </div>
+                
+            </div>
+            
+            <!-- ======================================= -->
+            <!-- COLUMNA DERECHA - CURSOS CON BRILLO    -->
+            <!-- ======================================= -->
+            <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-xl border border-[#A78BFA]/20 
+                        hover:border-[#A78BFA] hover:bg-[#A78BFA]/10 
+                        hover:shadow-[0_0_20px_rgba(167,139,250,0.3)]
+                        transition-all duration-300 p-3 lg:p-4 flex flex-col h-[332px]">
+                
+                <h3 class="text-sm font-semibold text-[#A78BFA] mb-3">
+                    <span class="lang-es">Cursos y Certificaciones</span>
+                    <span class="lang-en hidden">Courses & Certifications</span>
+                </h3>
+                
+                <div class="space-y-1 flex-1">
+                    
+                    <!-- CURSO 1 - GA4 -->
+                    <div class="border-b border-[#A78BFA]/20 pb-2 last:border-0 last:pb-0">
+                        <div class="flex items-start gap-2">
+                            <div class="w-7 h-7 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0">
+                                <i class="fab fa-google text-[#A78BFA] text-xs"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-semibold text-white mb-0">
+                                    <span class="lang-es">Google Analytics 4, Google Tag Manager & Looker Studio</span>
+                                    <span class="lang-en hidden">Google Analytics 4, Google Tag Manager & Looker Studio</span>
+                                </h4>
+                                <p class="text-[#A78BFA] text-[10px] font-medium">
+                                    <span class="lang-es">Analytics Way – <span class="text-gray-400">2026</span></span>
+                                    <span class="lang-en hidden">Analytics Way – <span class="text-gray-400">2026</span></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- CURSO 2 - GESTIÓN -->
+                    <div class="border-b border-[#A78BFA]/20 pb-2 last:border-0 last:pb-0">
+                        <div class="flex items-start gap-2">
+                            <div class="w-7 h-7 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-tasks text-[#A78BFA] text-xs"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-semibold text-white mb-0">
+                                    <span class="lang-es">Technical Marketing Handbook</span>
+                                    <span class="lang-en hidden">Technical Marketing Handbook</span>
+                                </h4>
+                                <p class="text-[#A78BFA] text-[10px] font-medium">
+                                    <span class="lang-es">Simmer – <span class="text-gray-400">2026</span></span>
+                                    <span class="lang-en hidden">Simmer – <span class="text-gray-400">2026</span></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- CURSO 3 - MARKETING SANTANDER -->
+                    <div class="border-b border-[#A78BFA]/20 pb-2 last:border-0 last:pb-0">
+                        <div class="flex items-start gap-2">
+                            <div class="w-7 h-7 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-bullhorn text-[#A78BFA] text-xs"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-semibold text-white mb-0">
+                                    <span class="lang-es">Marketing Digital</span>
+                                    <span class="lang-en hidden">Digital Marketing</span>
+                                </h4>
+                                <p class="text-[#A78BFA] text-[10px] font-medium">
+                                    <span class="lang-es">Santander Open Academy – <span class="text-gray-400">2026</span></span>
+                                    <span class="lang-en hidden">Santander Open Academy – <span class="text-gray-400">2026</span></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CURSO 4 - POWER BI SANTANDER -->
+                    <div class="border-b border-[#A78BFA]/20 pb-2 last:border-0 last:pb-0">
+                        <div class="flex items-start gap-2">
+                            <div class="w-7 h-7 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-chart-bar text-[#A78BFA] text-xs"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-semibold text-white mb-0">
+                                    <span class="lang-es">Gestión de Proyectos & Fundamentos de Metodologías Ágiles</span>
+                                    <span class="lang-en hidden">Project Management & Agile Methodologies Fundamentals</span>
+                                </h4>
+                                <p class="text-[#A78BFA] text-[10px] font-medium">
+                                    <span class="lang-es">Santander Open Academy – <span class="text-gray-400">2026</span></span>
+                                    <span class="lang-en hidden">Santander Open Academy – <span class="text-gray-400">2026</span></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- CURSO 5 - POWER BI DIGITAL HOUSE -->
+                    <div class="border-b border-[#A78BFA]/20 pb-2 last:border-0 last:pb-0">
+                        <div class="flex items-start gap-2">
+                            <div class="w-7 h-7 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-chart-pie text-[#A78BFA] text-xs"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-semibold text-white mb-0">
+                                    <span class="lang-es">Power BI</span>
+                                    <span class="lang-en hidden">Power BI</span>
+                                </h4>
+                                <p class="text-[#A78BFA] text-[10px] font-medium">
+                                    <span class="lang-es">Digital House – <span class="text-gray-400">2025</span></span>
+                                    <span class="lang-en hidden">Digital House – <span class="text-gray-400">2025</span></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- CURSO 6 - EXCEL -->
+                    <div class="border-b border-[#A78BFA]/20 pb-2 last:border-0 last:pb-0">
+                        <div class="flex items-start gap-2">
+                            <div class="w-7 h-7 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-file-excel text-[#A78BFA] text-xs"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-semibold text-white mb-0">
+                                    <span class="lang-es">Procesamiento de Datos con Excel</span>
+                                    <span class="lang-en hidden">Data Processing with Excel</span>
+                                </h4>
+                                <p class="text-[#A78BFA] text-[10px] font-medium">
+                                    <span class="lang-es">Coderhouse – <span class="text-gray-400">2023</span></span>
+                                    <span class="lang-en hidden">Coderhouse – <span class="text-gray-400">2023</span></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </div>
+        
+    </div>
+</section>
+
+<!-- Separador visual -->
+<div class="w-full h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent mt-8"></div>
+
+<!-- =========================================== -->
+<!-- SECCIÓN MIS HABILIDADES                    -->
+<!-- =========================================== -->
+<section id="habilidades" class="py-8 sm:py-10 bg-transparent text-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+
+        <!-- TÍTULO PRINCIPAL -->
+        <h2 class="text-2xl sm:text-3xl font-bold text-center mb-5">
+            <span class="lang-es">Mis Habilidades</span>
+            <span class="lang-en hidden">My Skills</span>
+        </h2>
+
+        <!-- GRILLA 6 CUADRADITOS - 3 COLUMNAS EN DESKTOP -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            
+            <!-- HABILIDAD 1 - PREPARACIÓN Y LIMPIEZA DE INFORMACIÓN -->
+            <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-xl border border-[#A78BFA]/20 
+                        hover:border-[#A78BFA] hover:bg-[#A78BFA]/10 
+                        hover:shadow-[0_0_20px_rgba(167,139,250,0.3)]
+                        transition-all duration-300 p-4 flex flex-col h-[140px]">
+                <div class="flex items-start gap-3 mb-2">
+                    <div class="w-8 h-8 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-broom text-[#A78BFA] text-sm"></i>
+                    </div>
+                    <h3 class="text-sm font-semibold text-[#A78BFA]">
+                        <span class="lang-es">Preparación y Limpieza de Datos</span>
+                        <span class="lang-en hidden">Data Preparation & Cleaning</span>
+                    </h3>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                    <span class="lang-es">Limpieza, transformación y validación de datos con Excel, SQL y Python.</span>
+                    <span class="lang-en hidden">Data cleaning, transformation and validation with Excel, SQL and Python.</span>
+                </p>
+            </div>
+
+            <!-- HABILIDAD 2 - ANÁLISIS DE DATOS -->
+            <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-xl border border-[#A78BFA]/20 
+                        hover:border-[#A78BFA] hover:bg-[#A78BFA]/10 
+                        hover:shadow-[0_0_20px_rgba(167,139,250,0.3)]
+                        transition-all duration-300 p-4 flex flex-col h-[140px]">
+                <div class="flex items-start gap-3 mb-2">
+                    <div class="w-8 h-8 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-database text-[#A78BFA] text-sm"></i>
+                    </div>
+                    <h3 class="text-sm font-semibold text-[#A78BFA]">
+                        <span class="lang-es">Análisis de Datos</span>
+                        <span class="lang-en hidden">Data Analysis</span>
+                    </h3>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                    <span class="lang-es">Análisis exploratorio, métricas y KPIs para transformar datos en insights accionables.</span>
+                    <span class="lang-en hidden">Exploratory analysis, metrics and KPIs to turn data into actionable insights.</span>
+                </p>
+            </div>
+            
+            <!-- HABILIDAD 3 - ANÁLISIS DE NEGOCIO -->
+            <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-xl border border-[#A78BFA]/20 
+                        hover:border-[#A78BFA] hover:bg-[#A78BFA]/10 
+                        hover:shadow-[0_0_20px_rgba(167,139,250,0.3)]
+                        transition-all duration-300 p-4 flex flex-col h-[140px]">
+                <div class="flex items-start gap-3 mb-2">
+                    <div class="w-8 h-8 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-briefcase text-[#A78BFA] text-sm"></i>
+                    </div>
+                    <h3 class="text-sm font-semibold text-[#A78BFA]">
+                        <span class="lang-es">Análisis de Negocio</span>
+                        <span class="lang-en hidden">Business Analysis</span>
+                    </h3>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                    <span class="lang-es">Interpretación de datos con foco en objetivos estratégicos y eficiencia operativa.</span>
+                    <span class="lang-en hidden">Data interpretation focused on strategic objectives and operational efficiency.</span>
+                </p>
+            </div>
+            
+            <!-- HABILIDAD 4 - ANALÍTICA DIGITAL -->
+            <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-xl border border-[#A78BFA]/20 
+                        hover:border-[#A78BFA] hover:bg-[#A78BFA]/10 
+                        hover:shadow-[0_0_20px_rgba(167,139,250,0.3)]
+                        transition-all duration-300 p-4 flex flex-col h-[140px]">
+                <div class="flex items-start gap-3 mb-2">
+                    <div class="w-8 h-8 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-chart-pie text-[#A78BFA] text-sm"></i>
+                    </div>
+                    <h3 class="text-sm font-semibold text-[#A78BFA]">
+                        <span class="lang-es">Analítica Digital</span>
+                        <span class="lang-en hidden">Digital Analytics</span>
+                    </h3>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                    <span class="lang-es">Implementación y análisis con GA4 y GTM: eventos, conversiones, funnels y medición.</span>
+                    <span class="lang-en hidden">Implementation and analysis with GA4 and GTM: events, conversions, funnels and measurement.</span>
+                </p>
+            </div>
+            
+            <!-- HABILIDAD 5 - VISUALIZACIÓN DE DATOS -->
+            <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-xl border border-[#A78BFA]/20 
+                        hover:border-[#A78BFA] hover:bg-[#A78BFA]/10 
+                        hover:shadow-[0_0_20px_rgba(167,139,250,0.3)]
+                        transition-all duration-300 p-4 flex flex-col h-[140px]">
+                <div class="flex items-start gap-3 mb-2">
+                    <div class="w-8 h-8 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-chart-line text-[#A78BFA] text-sm"></i>
+                    </div>
+                    <h3 class="text-sm font-semibold text-[#A78BFA]">
+                        <span class="lang-es">Visualización de Datos</span>
+                        <span class="lang-en hidden">Data Visualization</span>
+                    </h3>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                    <span class="lang-es">Diseño de dashboards claros e interactivos en Looker Studio y Power BI.</span>
+                    <span class="lang-en hidden">Clear and interactive dashboard design in Looker Studio and Power BI.</span>
+                </p>
+            </div>
+         
+            
+            <!-- HABILIDAD 6 - AUTOMATIZACIÓN CON PYTHON -->
+            <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-xl border border-[#A78BFA]/20 
+                        hover:border-[#A78BFA] hover:bg-[#A78BFA]/10 
+                        hover:shadow-[0_0_20px_rgba(167,139,250,0.3)]
+                        transition-all duration-300 p-4 flex flex-col h-[140px]">
+                <div class="flex items-start gap-3 mb-2">
+                    <div class="w-8 h-8 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0">
+                        <i class="fab fa-python text-[#A78BFA] text-sm"></i>
+                    </div>
+                    <h3 class="text-sm font-semibold text-[#A78BFA]">
+                        <span class="lang-es">Automatización con Python</span>
+                        <span class="lang-en hidden">Automation with Python</span>
+                    </h3>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">
+                    <span class="lang-es">Automatización de reportes, procesos de análisis y flujos de datos.</span>
+                    <span class="lang-en hidden">Automation of reports, analysis processes and data workflows.</span>
+                </p>
+            </div>
+            
+        </div>
+        
+    </div>
+</section>
+
+<!-- Separador visual -->
+<div class="w-full h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent mt-8"></div>
+
+<!-- =========================================== -->
+<!-- SECCIÓN CONTACTO - VERSIÓN FINAL           -->
+<!-- =========================================== -->
+<section id="contacto" class="py-8 sm:py-10 bg-transparent text-white">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+
+        <!-- TÍTULO PRINCIPAL -->
+        <h2 class="text-2xl sm:text-3xl font-bold text-center mb-5">
+            <span class="lang-es">Contacto</span>
+            <span class="lang-en hidden">Contact</span>
+        </h2>
+
+        <!-- GRILLA 2 COLUMNAS -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
+            
+            <!-- COLUMNA IZQUIERDA - CONECTEMOS -->
+            <div class="lg:col-span-3 flex flex-col h-[340px]">
+                <div class="flex flex-col justify-between h-full">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-[#A78BFA] mb-6">
+                            <span class="lang-es">Conectemos</span>
+                            <span class="lang-en hidden">Let's connect</span>
+                        </h3>
+                        
+                        <div class="space-y-5">
+                            <!-- LinkedIn -->
+                            <a href="https://www.linkedin.com/in/rociomalenrobledo/" 
+                               target="_blank" 
+                               class="flex items-center gap-4 group">
+                                <div class="w-10 h-10 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#A78BFA]/20 transition-all">
+                                    <i class="fab fa-linkedin text-[#A78BFA] text-base"></i>
+                                </div>
+                                <div>
+                                    <p class="text-base font-medium text-white group-hover:text-[#A78BFA] transition-colors">LinkedIn</p>
+                                    <p class="text-xs text-gray-400">/rociomalenrobledo</p>
+                                </div>
+                            </a>
+                            
+                            <!-- GitHub -->
+                            <a href="https://github.com/rociorobledo" 
+                               target="_blank" 
+                               class="flex items-center gap-4 group">
+                                <div class="w-10 h-10 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#A78BFA]/20 transition-all">
+                                    <i class="fab fa-github text-[#A78BFA] text-base"></i>
+                                </div>
+                                <div>
+                                    <p class="text-base font-medium text-white group-hover:text-[#A78BFA] transition-colors">GitHub</p>
+                                    <p class="text-xs text-gray-400">/rociorobledo</p>
+                                </div>
+                            </a>
+                            
+                            <!-- Email -->
+                            <a href="mailto:robledorociomalen@gmail.com" 
+                               class="flex items-center gap-4 group">
+                                <div class="w-10 h-10 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#A78BFA]/20 transition-all">
+                                    <i class="fas fa-envelope text-[#A78BFA] text-base"></i>
+                                </div>
+                                <div>
+                                    <p class="text-base font-medium text-white group-hover:text-[#A78BFA] transition-colors">Email</p>
+                                    <p class="text-xs text-gray-400">robledorociomalen@gmail.com</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Ubicación -->
+                    <div class="mt-auto pt-2">
+                        <p class="text-gray-400 text-sm">
+                            <span class="lang-es">📍 Buenos Aires, Argentina</span>
+                            <span class="lang-en hidden">📍 Buenos Aires, Argentina</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+           <!-- COLUMNA DERECHA - FORMULARIO -->
+<div class="lg:col-span-9">
+    <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-xl border border-[#A78BFA]/20 
+                hover:border-[#A78BFA] hover:bg-[#A78BFA]/10 
+                hover:shadow-[0_0_20px_rgba(167,139,250,0.3)]
+                transition-all duration-300 p-4 lg:p-5 flex flex-col h-[340px]">
+        
+        <h3 class="text-lg font-semibold text-[#A78BFA] mb-2">
+            <span class="lang-es">Haz tu consulta</span>
+            <span class="lang-en hidden">Submit your inquiry</span>
+        </h3>
+        
+        <form action="https://formsubmit.co/robledorociomalen@gmail.com" 
+              method="POST" 
+              class="flex flex-col flex-1">
+            
+            <input type="hidden" name="_subject" value="📬 Nuevo mensaje desde tu portfolio">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="https://tusitio.com/gracias.html">
+            
+            <div class="space-y-1.5 flex-1">
+                
+                <!-- Nombre -->
+<div>
+    <label class="block text-xs text-gray-400 mb-1">
+        <span class="lang-es">Nombre completo</span>
+        <span class="lang-en hidden">Full name</span>
+        <span class="text-red-500 ml-1">*</span>
+    </label>
+    <input type="text" 
+           id="input-nombre"
+           name="nombre" 
+           placeholder=""
+           class="w-full px-3 py-1.5 text-xs bg-[#A78BFA]/5 border border-[#A78BFA]/20 rounded-lg 
+                  focus:outline-none focus:ring-1 focus:ring-[#A78BFA] focus:border-[#A78BFA] 
+                  text-white placeholder-gray-500 transition-all"
+           required>
+</div>
+                
+                <!-- Email -->
+<div>
+    <label class="block text-xs text-gray-400 mb-1">
+        <span class="lang-es">Email</span>
+        <span class="lang-en hidden">Email</span>
+        <span class="text-red-500 ml-1">*</span>
+    </label>
+    <input type="email" 
+           id="input-email"
+           name="email" 
+           placeholder=""
+           class="w-full px-3 py-1.5 text-xs bg-[#A78BFA]/5 border border-[#A78BFA]/20 rounded-lg 
+                  focus:outline-none focus:ring-1 focus:ring-[#A78BFA] focus:border-[#A78BFA] 
+                  text-white placeholder-gray-500 transition-all"
+           required>
+</div>
+                
+               <!-- Mensaje -->
+<div>
+    <label class="block text-xs text-gray-400 mb-1">
+        <span class="lang-es">Mensaje / Consulta</span>
+        <span class="lang-en hidden">Message / Inquiry</span>
+        <span class="text-red-500 ml-1">*</span>
+    </label>
+    <textarea name="mensaje" 
+              id="input-mensaje"
+              rows="4" 
+              placeholder=""
+              class="w-full px-3 py-1.5 text-xs bg-[#A78BFA]/5 border border-[#A78BFA]/20 rounded-lg 
+                     focus:outline-none focus:ring-1 focus:ring-[#A78BFA] focus:border-[#A78BFA] 
+                     text-white placeholder-gray-500 transition-all resize-none"
+              required></textarea>
+</div>
+            
+            <!-- Botón enviar -->
+            <button type="submit" 
+                    class="w-full mt-2 px-4 py-1.5 bg-[#A78BFA]/10 border border-[#A78BFA]/30 
+                           hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:shadow-[0_0_15px_rgba(167,139,250,0.3)]
+                           text-white text-xs font-medium rounded-lg transition-all duration-300">
+                <span class="lang-es">Enviar</span>
+                <span class="lang-en hidden">Send</span>
+            </button>
+            
+        </form>
+        
+    </div>
+</div>
+            
+        </div>
+        
+    </div>
+</section>
+
+<!-- FIN SECCIÓN CONTACTO -->
+
+<footer class="text-center py-10">
+    <p class="text-sm mb-2 text-gray-400">
+        &copy; <span id="current-year"></span> Rocio Robledo
+    </p>
+    <p class="text-xs text-gray-500 mb-6">
+        <span class="lang-es">Análisis de datos · Analítica Digital</span>
+        <span class="lang-en hidden">Data Analytics · Digital Analytics</span>
+    </p>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // --- 1. Año automático en footer ---
+    const yearElements = document.querySelectorAll('#current-year, #current-year-en');
+    const currentYear = new Date().getFullYear();
+    yearElements.forEach(el => el.textContent = currentYear);
+
+    // --- 2. Cambio de idioma ES / EN ---
+const langToggle = document.getElementById('lang-toggle');
+const mobileLangToggle = document.getElementById('mobile-lang-toggle');
+const htmlElement = document.documentElement;
+
+function setLanguage(lang) {
+    // Textos normales
+    document.querySelectorAll('.lang-es').forEach(el =>
+        el.classList.toggle('hidden', lang !== 'es')
+    );
+    document.querySelectorAll('.lang-en').forEach(el =>
+        el.classList.toggle('hidden', lang !== 'en')
+    );
+    
+    // Placeholders del formulario de contacto
+    const inputNombre = document.getElementById('input-nombre');
+    const inputEmail = document.getElementById('input-email');
+    const inputMensaje = document.getElementById('input-mensaje');
+    
+    if (inputNombre) {
+        inputNombre.placeholder = lang === 'es' ? 'Juan Pérez' : 'John Adams';
+    }
+    if (inputEmail) {
+        inputEmail.placeholder = lang === 'es' ? 'juanperez@gmail.com' : 'johnadams@gmail.com';
+    }
+    if (inputMensaje) {
+        inputMensaje.placeholder = lang === 'es' ? 'Tengo una consulta...' : 'I have a question...';
+    }
+    
+    htmlElement.lang = lang;
+    localStorage.setItem('preferredLang', lang);
+}
+
+const storedLang = localStorage.getItem('preferredLang') || 'es';
+setLanguage(storedLang);
+
+if (langToggle) {
+    langToggle.addEventListener('click', () => {
+        const newLang = htmlElement.lang === 'es' ? 'en' : 'es';
+        setLanguage(newLang);
+    });
+}
+
+if (mobileLangToggle) {
+    mobileLangToggle.addEventListener('click', () => {
+        const newLang = htmlElement.lang === 'es' ? 'en' : 'es';
+        setLanguage(newLang);
+    });
+}
+
+    // --- 3. Menú mobile ---
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="assets/js/liquid-ether.js" defer></script>
+
+<!-- Fondo animado -->
+
+<style>
+#liquid-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+    background: #0D0D0D;
+    overflow: hidden;
+}
+
+.graph-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    opacity: 0.15;
+}
+
+.graph-line {
+    stroke: #A78BFA;
+    stroke-width: 2;
+    fill: none;
+    filter: drop-shadow(0 0 8px #A78BFA);
+    animation: drawLine 4s ease-in-out infinite;
+}
+
+.graph-line-2 {
+    stroke: #6D28D9;
+    stroke-width: 1.5;
+    fill: none;
+    opacity: 0.5;
+    animation: drawLine 6s ease-in-out infinite reverse;
+}
+
+@keyframes drawLine {
+    0% { stroke-dashoffset: 1000; }
+    50% { stroke-dashoffset: 500; }
+    100% { stroke-dashoffset: 0; }
+}
+
+/* ✨ SOLO CAMBIOS ACÁ: +nítidos, +tamaños variados */
+.metric-badge {
+    position: absolute;
+    color: rgba(167, 139, 250, 0.7);  /* 0.2 → 0.7 */
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+    animation: float 20s linear infinite;
+    text-shadow: 0 0 12px rgba(167, 139, 250, 0.4); /* glow */
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    opacity: 0.4;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0); opacity: 0; }
+    10% { opacity: 0.4; }
+    90% { opacity: 0.4; }
+    100% { transform: translate(100px, -100px); opacity: 0; }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('liquid-background');
+    if (container) {
+        // SVG con líneas de gráfico (IGUAL)
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('width', '100%');
+        svg.setAttribute('height', '100%');
+        svg.style.position = 'absolute';
+        svg.style.bottom = '0';
+        svg.style.left = '0';
+        svg.style.opacity = '0.15';
+        
+        const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path1.setAttribute('d', 'M0,200 Q200,50 400,180 T800,120 T1200,200 T1600,80 T2000,150');
+        path1.classList.add('graph-line');
+        
+        const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path2.setAttribute('d', 'M0,250 Q150,180 300,220 T600,190 T900,250 T1200,160 T1500,200 T1800,120 T2100,180');
+        path2.classList.add('graph-line-2');
+        
+        svg.appendChild(path1);
+        svg.appendChild(path2);
+        container.appendChild(svg);
+        
+        // 📊 MÉTRICAS FLOTANTES - MÁS NÍTIDAS, TAMAÑOS VARIADOS
+        const metrics = [
+            { text: 'COMPRAS: 2.4%', size: 11 },
+            { text: 'ROI: 156%', size: 13 },
+            { text: 'USERS: 39.3K', size: 14 },
+            { text: 'CONVERSIONES: 3.2%', size: 12 },
+            { text: 'BOUNCE: 42%', size: 11 },
+            { text: 'SESSIONS: 12.8K', size: 14 },
+            { text: 'GOAL: 89%', size: 12 },
+            { text: 'REVENUE: $143.9K', size: 15 },
+            { text: 'ROAS: 4.5x', size: 11 },
+            { text: 'AOV: $89.50', size: 12 },
+            { text: 'LTV: 3.2', size: 11 },
+            { text: 'PURCHASES: 784', size: 12 }
+        ];
+        
+        metrics.forEach((metric, i) => {
+            const el = document.createElement('div');
+            el.className = 'metric-badge';
+            el.textContent = metric.text;
+            el.style.left = Math.random() * 90 + '%';
+            el.style.top = Math.random() * 90 + '%';
+            el.style.animationDelay = i * 0.5 + 's';
+            el.style.animationDuration = (15 + Math.random() * 20) + 's';
+            el.style.fontSize = metric.size + 'px';
+            
+            // Algunos con glow extra
+            if (metric.size > 13) {
+                el.style.textShadow = '0 0 15px rgba(167, 139, 250, 0.8)';
+                el.style.color = 'rgba(167, 139, 250, 0.85)';
+            }
+            
+            container.appendChild(el);
+        });
+    }
+});
+</script>

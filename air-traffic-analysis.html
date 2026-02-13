@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Traffic Analysis · Rocio Robledo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts IGUAL QUE INDEX -->
+    <link href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Gentium Book Plus', serif;
+            background: #0D0D0D;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        /* Misma clase que en index */
+        .tech-font {
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+        
+        /* === FONDO DE AVIONCITOS === */
+        #fondo-aerolineas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 0;
+            background: #0D0D0D;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .avion {
+            position: absolute;
+            color: rgba(167, 139, 250, 0.2);
+            font-size: 24px;
+            animation: volar 25s linear infinite;
+            transform: rotate(10deg);
+            text-shadow: 0 0 15px rgba(167, 139, 250, 0.3);
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .ruta-punto {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(167, 139, 250, 0.15);
+            border-radius: 50%;
+            animation: parpadeo 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes volar {
+            0% { transform: translate(-10%, 110vh) rotate(5deg); opacity: 0; }
+            5% { opacity: 0.3; }
+            95% { opacity: 0.3; }
+            100% { transform: translate(110vw, -10%) rotate(15deg); opacity: 0; }
+        }
+
+        @keyframes parpadeo {
+            0%, 100% { opacity: 0.1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(1.8); }
+        }
+        
+        /* Para que el contenido esté sobre el fondo */
+        main, header, footer {
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Forzar tipografía en header */
+        header a, header button, header span {
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body class="bg-[#0D0D0D] text-white">
+
+<!-- === FONDO ANIMADO DE AVIONCITOS === -->
+<div id="fondo-aerolineas"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const fondo = document.getElementById('fondo-aerolineas');
+    
+    for (let i = 0; i < 15; i++) {
+        const avion = document.createElement('div');
+        avion.className = 'avion';
+        avion.innerHTML = '✈️';
+        avion.style.left = Math.random() * 100 + '%';
+        avion.style.animationDelay = i * 1.5 + 's';
+        avion.style.animationDuration = (20 + Math.random() * 15) + 's';
+        avion.style.fontSize = (18 + Math.random() * 20) + 'px';
+        avion.style.opacity = 0.2 + Math.random() * 0.2;
+        fondo.appendChild(avion);
+    }
+    
+    for (let i = 0; i < 60; i++) {
+        const punto = document.createElement('div');
+        punto.className = 'ruta-punto';
+        punto.style.left = Math.random() * 100 + '%';
+        punto.style.top = Math.random() * 100 + '%';
+        punto.style.animationDelay = i * 0.1 + 's';
+        punto.style.animationDuration = (2 + Math.random() * 4) + 's';
+        punto.style.background = i % 3 === 0 ? '#A78BFA' : '#6D28D9';
+        fondo.appendChild(punto);
+    }
+    
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', '100%');
+    svg.setAttribute('height', '100%');
+    svg.style.position = 'absolute';
+    svg.style.top = '0';
+    svg.style.left = '0';
+    svg.style.opacity = '0.1';
+    svg.style.pointerEvents = 'none';
+    
+    for (let i = 0; i < 12; i++) {
+        const x1 = 5 + Math.random() * 90;
+        const y1 = 5 + Math.random() * 90;
+        const x2 = x1 + (Math.random() * 40 - 20);
+        const y2 = y1 + (Math.random() * 40 - 20);
+        
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', x1 + '%');
+        line.setAttribute('y1', y1 + '%');
+        line.setAttribute('x2', x2 + '%');
+        line.setAttribute('y2', y2 + '%');
+        line.setAttribute('stroke', '#A78BFA');
+        line.setAttribute('stroke-width', '1');
+        line.setAttribute('stroke-dasharray', '5,5');
+        svg.appendChild(line);
+    }
+    
+    fondo.appendChild(svg);
+});
+</script>
+
+<!-- HEADER CON TIPOGRAFÍA IGUAL AL INDEX -->
+<header class="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-[#0d0d0d]/80 border-b border-gray-800">
+    <nav class="w-full py-4 px-6 flex justify-between items-center max-w-7xl mx-auto">
+        
+        <a href="index.html" class="text-white hover:text-[#C084FC] transition-colors text-lg font-semibold" style="font-family: 'Gentium Book Plus', serif;">
+            <i class="fas fa-arrow-left mr-2"></i>
+            <span class="lang-es">Volver</span>
+            <span class="lang-en hidden">Back</span>
+        </a>
+        
+        <span class="text-white hover:text-[#C084FC] transition-colors text-lg font-semibold" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Análisis del Tráfico Aéreo</span>
+            <span class="lang-en hidden">Air Traffic Analysis</span>
+        </span>
+        
+        <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-[#C084FC] text-2xl">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <button id="lang-toggle" 
+                class="hidden md:flex text-white hover:text-[#C084FC] text-sm px-4 py-1.5 rounded-full border border-white/30 hover:border-[#C084FC] transition-all duration-300 items-center gap-2 bg-white/5 backdrop-blur-sm">
+            <span class="lang-es flex items-center gap-2">
+                <img src="assets/images/flag-usa.png" alt="USA flag" class="w-4 h-3 inline-block object-cover">
+                <span>English</span>
+            </span>
+            <span class="lang-en hidden flex items-center gap-2">
+                <img src="assets/images/flag-spain.png" alt="Spain flag" class="w-4 h-3 inline-block object-cover">
+                <span>Español</span>
+            </span>
+        </button>
+        
+    </nav>
+
+    <div id="mobile-menu" class="hidden md:hidden bg-[#0d0d0d]/95 backdrop-blur-md border-t border-gray-800 py-4 px-6">
+        <div class="flex flex-col items-center space-y-4">
+            
+            <button id="mobile-lang-toggle" 
+                    class="text-white hover:text-[#C084FC] text-sm px-4 py-1.5 rounded-full border border-white/30 hover:border-[#C084FC] transition-all duration-300 flex items-center gap-2 bg-white/5 backdrop-blur-sm mx-auto">
+                <span class="lang-es flex items-center gap-2">
+                    <img src="assets/images/flag-usa.png" alt="USA flag" class="w-4 h-3 inline-block object-cover">
+                    <span>English</span>
+                </span>
+                <span class="lang-en hidden flex items-center gap-2">
+                    <img src="assets/images/flag-spain.png" alt="Spain flag" class="w-4 h-3 inline-block object-cover">
+                    <span>Español</span>
+                </span>
+            </button>
+            
+            <span class="text-gray-300 text-sm tech-font pt-2 border-t border-gray-800 w-full text-center">
+                <span class="lang-es">Análisis del Tráfico Aéreo</span>
+                <span class="lang-en hidden">Air Traffic Analysis</span>
+            </span>
+        </div>
+    </div>
+</header>
+
+<main class="relative z-10 pt-24 pb-16 px-4 max-w-7xl mx-auto min-h-screen">
+    
+    <!-- TÍTULO -->
+    <div class="mb-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-[#A78BFA] mb-4" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Análisis del Tráfico Aéreo</span>
+            <span class="lang-en hidden">Air Traffic Analysis</span>
+        </h1>
+        <p class="text-gray-400 text-lg max-w-3xl mx-auto" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">
+                Evolución de aerolíneas, rutas y estacionalidad del tráfico aéreo en Argentina.
+            </span>
+            <span class="lang-en hidden">
+                Evolution of airlines, routes, and seasonality of air traffic in Argentina.
+            </span>
+        </p>
+    </div>
+    
+    <!-- IMAGEN DEL DASHBOARD -->
+    <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-2xl border border-[#A78BFA]/20 p-4 mb-8">
+        <div class="w-full bg-gray-950 rounded-xl overflow-hidden">
+            <img src="assets/images/trafico-aereo.jpg" 
+                 alt="Air Traffic Analysis Dashboard"
+                 class="w-full h-auto object-contain">
+        </div>
+    </div>
+    
+    <!-- CONTENIDO DE 2 COLUMNAS -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- COLUMNA IZQUIERDA (DESCRIPCIÓN) -->
+        <div class="lg:col-span-2 bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800 p-6">
+            <h2 class="text-2xl font-semibold text-[#A78BFA] mb-4" style="font-family: 'Gentium Book Plus', serif;">
+                <span class="lang-es">Descripción del proyecto</span>
+                <span class="lang-en hidden">Project description</span>
+            </h2>
+            
+            <div class="space-y-4 text-gray-300" style="font-family: 'Gentium Book Plus', serif;">
+                <p>
+    <span class="lang-es">
+        Este proyecto analiza el <strong class="text-white">tráfico aéreo de pasajeros en Argentina</strong> 
+        utilizando datos públicos del SIAC (Sistema Integrado de Aviación Civil). 
+        Se exploran tendencias, participación de mercado de aerolíneas, rutas más transitadas y estacionalidad.
+        El análisis busca responder preguntas clave como: ¿qué aerolíneas dominan el mercado?, ¿cuáles son las rutas 
+        con mayor demanda?, ¿cómo varía el tráfico a lo largo del año? A través de gráficos interactivos y mapas, 
+        el dashboard facilita la comprensión de la dinámica del sector aerocomercial, permitiendo detectar oportunidades 
+        y entender la evolución del mercado en diferentes períodos. La información está presentada de manera intuitiva 
+        para que cualquier usuario pueda explorar los datos y obtener respuestas rápidas.
+    </span>
+    <span class="lang-en hidden">
+        This project analyzes <strong class="text-white">passenger air traffic in Argentina</strong>
+        using public SIAC data. It explores trends, airline market share, busiest routes, and seasonality.
+        The analysis seeks to answer key questions such as: which airlines dominate the market?, which are the busiest routes?,
+        how does traffic vary throughout the year? Through interactive charts and maps, the dashboard facilitates 
+        understanding of the airline industry dynamics, allowing to detect opportunities and understand market evolution 
+        over different periods. The information is presented intuitively so that any user can explore the data and get quick answers.
+    </span>
+</p>
+
+<h3 class="text-xl font-semibold text-[#A78BFA] mt-6">
+    <span class="lang-es">Objetivos del análisis:</span>
+    <span class="lang-en hidden">Analysis objectives:</span>
+</h3>
+<ul class="list-disc list-inside space-y-2 text-gray-400">
+    <li class="lang-es">Analizar la evolución del tráfico aéreo por aerolínea y ruta.</li>
+    <li class="lang-en hidden">Analyze air traffic evolution by airline and route.</li>
+    <li class="lang-es">Identificar estacionalidad y picos de demanda.</li>
+    <li class="lang-en hidden">Identify seasonality and demand peaks.</li>
+    <li class="lang-es">Visualizar la participación de mercado de cada aerolínea.</li>
+    <li class="lang-en hidden">Visualize market share of each airline.</li>
+    <li class="lang-es">Crear un dashboard interactivo para exploración de datos.</li>
+    <li class="lang-en hidden">Create an interactive dashboard for data exploration.</li>
+</ul>
+                
+                <h3 class="text-xl font-semibold text-[#A78BFA] mt-6">
+                    <span class="lang-es">Tecnologías utilizadas:</span>
+                    <span class="lang-en hidden">Technologies used:</span>
+                </h3>
+                <div class="flex flex-wrap gap-2 mt-2">
+                    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">Excel</span>
+                    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">Power Query</span>
+                    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">Power BI</span>
+                    <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">Data Modeling</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- COLUMNA DERECHA (KPIS) -->
+        <div class="bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800 p-6">
+            <h2 class="text-xl font-semibold text-[#A78BFA] mb-4" style="font-family: 'Gentium Book Plus', serif;">
+                <span class="lang-es">KPIs principales</span>
+                <span class="lang-en hidden">Main KPIs</span>
+            </h2>
+            
+            <div class="space-y-4">
+    <div class="flex justify-between items-center pb-2 border-b border-gray-800">
+        <span class="text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Vuelos</span>
+            <span class="lang-en hidden">Flights</span>
+        </span>
+    </div>
+    <div class="flex justify-between items-center pb-2 border-b border-gray-800">
+        <span class="text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Pasajeros</span>
+            <span class="lang-en hidden">Passengers</span>
+        </span>
+    </div>
+    <div class="flex justify-between items-center pb-2 border-b border-gray-800">
+        <span class="text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Aerolíneas</span>
+            <span class="lang-en hidden">Airlines</span>
+        </span>
+    </div>
+    <div class="flex justify-between items-center pb-2 border-b border-gray-800">
+        <span class="text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Rutas</span>
+            <span class="lang-en hidden">Routes</span>
+        </span>
+    </div>
+    
+    <!-- ESPACIO EXTRA PARA SCROLL -->
+    <div style="height: 50px;"></div>
+    
+</main>
+
+<!-- FOOTER IDÉNTICO AL INDEX -->
+<footer class="text-center py-10">
+
+    <p class="text-sm mb-2 text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+        &copy; <span id="current-year"></span> Rocio Robledo
+    </p>
+
+    <p class="text-xs text-gray-500 mb-6" style="font-family: 'Gentium Book Plus', serif;">
+        <span class="lang-es">Análisis de datos · Analítica Digital </span>
+        <span class="lang-en hidden">Data Analytics · Digital Analytics </span>
+    </p>
+
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // --- 1. Año automático en footer ---
+    const yearElements = document.querySelectorAll('#current-year, #current-year-en');
+    const currentYear = new Date().getFullYear();
+    yearElements.forEach(el => el.textContent = currentYear);
+
+    // --- 2. Cambio de idioma ES / EN ---
+    const langToggle = document.getElementById('lang-toggle');
+    const htmlElement = document.documentElement;
+
+    function setLanguage(lang) {
+        document.querySelectorAll('.lang-es').forEach(el =>
+            el.classList.toggle('hidden', lang !== 'es')
+        );
+        document.querySelectorAll('.lang-en').forEach(el =>
+            el.classList.toggle('hidden', lang !== 'en')
+        );
+        htmlElement.lang = lang;
+        localStorage.setItem('preferredLang', lang);
+    }
+
+    const storedLang = localStorage.getItem('preferredLang') || 'es';
+    setLanguage(storedLang);
+
+    if (langToggle) {
+        langToggle.addEventListener('click', () => {
+            const newLang = htmlElement.lang === 'es' ? 'en' : 'es';
+            setLanguage(newLang);
+        });
+    }
+
+});
+</script>
+
+<!-- Scripts del fondo -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+<script src="assets/js/liquid-ether.js" defer></script>
+
+</body>
+</html>
