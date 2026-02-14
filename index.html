@@ -1238,9 +1238,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             <input type="hidden" name="_subject" value="📬 Nuevo mensaje desde tu portfolio">
             <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_next" value="https://tusitio.com/gracias.html">
-            
+            <input type="hidden" name="_captcha" value="false">   
+            <input type="hidden" name="_autoresponse" id="autoresponse-field" value="">
+            <input type="hidden" name="_from" value="Rocio Robledo <robledorociomalen@gmail.com>">
             <div class="space-y-1.5 flex-1">
                 
                 <!-- Nombre -->
@@ -1348,7 +1348,7 @@ function setLanguage(lang) {
         el.classList.toggle('hidden', lang !== 'en')
     );
     
-    // Placeholders del formulario de contacto
+    // Placeholders del formulario
     const inputNombre = document.getElementById('input-nombre');
     const inputEmail = document.getElementById('input-email');
     const inputMensaje = document.getElementById('input-mensaje');
@@ -1361,6 +1361,14 @@ function setLanguage(lang) {
     }
     if (inputMensaje) {
         inputMensaje.placeholder = lang === 'es' ? 'Tengo una consulta...' : 'I have a question...';
+    }
+    
+    // Autoresponse según idioma
+    const autoresponseField = document.getElementById('autoresponse-field');
+    if (autoresponseField) {
+        autoresponseField.value = lang === 'es' 
+            ? 'Gracias por contactarme. Te responderé a la brevedad.'
+            : 'Thank you for contacting me. I will reply to you as soon as possible.';
     }
     
     htmlElement.lang = lang;
