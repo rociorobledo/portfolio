@@ -1215,101 +1215,105 @@ document.addEventListener('DOMContentLoaded', function() {
                             </a>
                         </div>
                     </div>
+                </div>
+            </div> <!-- FIN COLUMNA IZQUIERDA -->
+            
+            <!-- COLUMNA DERECHA - FORMULARIO -->
+            <div class="lg:col-span-9">
+                <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-xl border border-[#A78BFA]/20 
+                            hover:border-[#A78BFA] hover:bg-[#A78BFA]/10 
+                            hover:shadow-[0_0_20px_rgba(167,139,250,0.3)]
+                            transition-all duration-300 p-4 lg:p-5 flex flex-col h-[340px]">
                     
-           <!-- COLUMNA DERECHA - FORMULARIO -->
-<div class="lg:col-span-9">
-    <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-xl border border-[#A78BFA]/20 
-                hover:border-[#A78BFA] hover:bg-[#A78BFA]/10 
-                hover:shadow-[0_0_20px_rgba(167,139,250,0.3)]
-                transition-all duration-300 p-4 lg:p-5 flex flex-col h-[340px]">
-        
-        <h3 class="text-lg font-semibold text-[#A78BFA] mb-2">
-            <span class="lang-es">Haz tu consulta</span>
-            <span class="lang-en hidden">Submit your inquiry</span>
-        </h3>
-        
-        <form action="https://formsubmit.co/robledorociomalen@gmail.com" 
-              method="POST" 
-              class="flex flex-col flex-1">
+                    <h3 class="text-lg font-semibold text-[#A78BFA] mb-2">
+                        <span class="lang-es">Haz tu consulta</span>
+                        <span class="lang-en hidden">Submit your inquiry</span>
+                    </h3>
+                    
+                    <form action="https://formsubmit.co/robledorociomalen@gmail.com" 
+                          method="POST" 
+                          class="flex flex-col flex-1">
+                        
+                        <input type="hidden" name="_subject" value="📬 Nuevo mensaje desde tu portfolio">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_captcha" value="false">   
+                        <input type="hidden" name="_autoresponse" id="autoresponse-field" value="">
+                        <input type="hidden" name="_from" value="Rocio Robledo <robledorociomalen@gmail.com>">
+                        
+                        <div class="space-y-1.5 flex-1">
+                            
+                            <!-- Nombre -->
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">
+                                    <span class="lang-es">Nombre completo</span>
+                                    <span class="lang-en hidden">Full name</span>
+                                    <span class="text-red-500 ml-1">*</span>
+                                </label>
+                                <input type="text" 
+                                       id="input-nombre"
+                                       name="nombre" 
+                                       placeholder=""
+                                       class="w-full px-3 py-1.5 text-xs bg-[#A78BFA]/5 border border-[#A78BFA]/20 rounded-lg 
+                                              focus:outline-none focus:ring-1 focus:ring-[#A78BFA] focus:border-[#A78BFA] 
+                                              text-white placeholder-gray-500 transition-all"
+                                       required>
+                            </div>
+                            
+                            <!-- Email -->
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">
+                                    <span class="lang-es">Email</span>
+                                    <span class="lang-en hidden">Email</span>
+                                    <span class="text-red-500 ml-1">*</span>
+                                </label>
+                                <input type="email" 
+                                       id="input-email"
+                                       name="email" 
+                                       placeholder=""
+                                       class="w-full px-3 py-1.5 text-xs bg-[#A78BFA]/5 border border-[#A78BFA]/20 rounded-lg 
+                                              focus:outline-none focus:ring-1 focus:ring-[#A78BFA] focus:border-[#A78BFA] 
+                                              text-white placeholder-gray-500 transition-all"
+                                       required>
+                            </div>
+                            
+                            <!-- Mensaje -->
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">
+                                    <span class="lang-es">Mensaje / Consulta</span>
+                                    <span class="lang-en hidden">Message / Inquiry</span>
+                                    <span class="text-red-500 ml-1">*</span>
+                                </label>
+                                <textarea name="mensaje" 
+                                          id="input-mensaje"
+                                          rows="4" 
+                                          placeholder=""
+                                          class="w-full px-3 py-1.5 text-xs bg-[#A78BFA]/5 border border-[#A78BFA]/20 rounded-lg 
+                                                 focus:outline-none focus:ring-1 focus:ring-[#A78BFA] focus:border-[#A78BFA] 
+                                                 text-white placeholder-gray-500 transition-all resize-none"
+                                          required></textarea>
+                            </div>
+                            
+                            <!-- Botón enviar -->
+                            <button type="submit" 
+                                    id="submit-btn"
+                                    class="w-full mt-2 px-4 py-1.5 bg-[#A78BFA]/10 border border-[#A78BFA]/30 
+                                           hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:shadow-[0_0_15px_rgba(167,139,250,0.3)]
+                                           text-white text-xs font-medium rounded-lg transition-all duration-300">
+                                <span class="lang-es" id="submit-text-es">Enviar</span>
+                                <span class="lang-en hidden" id="submit-text-en">Send</span>
+                            </button>
+                            
+                        </div>
+                        
+                    </form>
+                    
+                </div>
+            </div> <!-- FIN COLUMNA DERECHA -->
             
-            <input type="hidden" name="_subject" value="📬 Nuevo mensaje desde tu portfolio">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_captcha" value="false">   
-            <input type="hidden" name="_autoresponse" id="autoresponse-field" value="">
-            <input type="hidden" name="_from" value="Rocio Robledo <robledorociomalen@gmail.com>">
-            <div class="space-y-1.5 flex-1">
-                
-                <!-- Nombre -->
-<div>
-    <label class="block text-xs text-gray-400 mb-1">
-        <span class="lang-es">Nombre completo</span>
-        <span class="lang-en hidden">Full name</span>
-        <span class="text-red-500 ml-1">*</span>
-    </label>
-    <input type="text" 
-           id="input-nombre"
-           name="nombre" 
-           placeholder=""
-           class="w-full px-3 py-1.5 text-xs bg-[#A78BFA]/5 border border-[#A78BFA]/20 rounded-lg 
-                  focus:outline-none focus:ring-1 focus:ring-[#A78BFA] focus:border-[#A78BFA] 
-                  text-white placeholder-gray-500 transition-all"
-           required>
-</div>
-                
-                <!-- Email -->
-<div>
-    <label class="block text-xs text-gray-400 mb-1">
-        <span class="lang-es">Email</span>
-        <span class="lang-en hidden">Email</span>
-        <span class="text-red-500 ml-1">*</span>
-    </label>
-    <input type="email" 
-           id="input-email"
-           name="email" 
-           placeholder=""
-           class="w-full px-3 py-1.5 text-xs bg-[#A78BFA]/5 border border-[#A78BFA]/20 rounded-lg 
-                  focus:outline-none focus:ring-1 focus:ring-[#A78BFA] focus:border-[#A78BFA] 
-                  text-white placeholder-gray-500 transition-all"
-           required>
-</div>
-                
-               <!-- Mensaje -->
-<div>
-    <label class="block text-xs text-gray-400 mb-1">
-        <span class="lang-es">Mensaje / Consulta</span>
-        <span class="lang-en hidden">Message / Inquiry</span>
-        <span class="text-red-500 ml-1">*</span>
-    </label>
-    <textarea name="mensaje" 
-              id="input-mensaje"
-              rows="4" 
-              placeholder=""
-              class="w-full px-3 py-1.5 text-xs bg-[#A78BFA]/5 border border-[#A78BFA]/20 rounded-lg 
-                     focus:outline-none focus:ring-1 focus:ring-[#A78BFA] focus:border-[#A78BFA] 
-                     text-white placeholder-gray-500 transition-all resize-none"
-              required></textarea>
-</div>
-            
-           <!-- Botón enviar -->
-<button type="submit" 
-        id="submit-btn"
-        class="w-full mt-2 px-4 py-1.5 bg-[#A78BFA]/10 border border-[#A78BFA]/30 
-               hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:shadow-[0_0_15px_rgba(167,139,250,0.3)]
-               text-white text-xs font-medium rounded-lg transition-all duration-300">
-    <span class="lang-es" id="submit-text-es">Enviar</span>
-    <span class="lang-en hidden" id="submit-text-en">Send</span>
-</button>
-            
-        </form>
-        
-    </div>
-</div>
-            
-        </div>
+        </div> <!-- FIN GRILLA -->
         
     </div>
 </section>
-
 <!-- FIN SECCIÓN CONTACTO -->
 
 <footer class="text-center py-10">
