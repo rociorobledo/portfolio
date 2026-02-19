@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Looker Studio | GA4 Ecommerce</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logofavicon.png">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Gentium Book Plus', serif;
+            background: #0D0D0D;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        .tech-font {
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+        
+        /* FONDO DE NÚMEROS GOOGLE */
+        #fondo-google {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 0;
+            background: #0D0D0D;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .numero-ga {
+            position: absolute;
+            color: rgba(66, 133, 244, 0.2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            white-space: nowrap;
+            animation: flotarNumero 25s linear infinite;
+            text-shadow: 0 0 10px rgba(66, 133, 244, 0.2);
+            font-weight: 500;
+            letter-spacing: 1px;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .barra-google {
+            position: absolute;
+            bottom: 5%;
+            left: 5%;
+            width: 90%;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                #4285F4, #EA4335, #FBBC05, #34A853, #4285F4);
+            opacity: 0.15;
+            border-radius: 2px;
+            animation: barraMovil 10s linear infinite;
+            background-size: 200% 100%;
+            pointer-events: none;
+        }
+
+        @keyframes flotarNumero {
+            0% { transform: translate(0, 100vh); opacity: 0; }
+            5% { opacity: 0.3; }
+            95% { opacity: 0.3; }
+            100% { transform: translate(50px, -20vh); opacity: 0; }
+        }
+
+        @keyframes barraMovil {
+            0% { background-position: 0% 0; opacity: 0.1; }
+            50% { opacity: 0.25; }
+            100% { background-position: 200% 0; opacity: 0.1; }
+        }
+        
+        main, header, footer {
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Estilo para badges que brillan como en la web */
+        .skill-badge {
+            @apply bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default;
+        }
+        
+        .feature-card {
+            @apply bg-[#A78BFA]/5 backdrop-blur-sm rounded-xl border border-[#A78BFA]/20 p-8 hover:border-[#A78BFA] hover:bg-[#A78BFA]/10 hover:shadow-[0_0_20px_rgba(167,139,250,0.3)] transition-all duration-300;
+        }
+        
+        .price-tag {
+            background: linear-gradient(135deg, #4285F4, #EA4335, #FBBC05, #34A853);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-[#0D0D0D] text-white">
+
+<!-- FONDO DE NÚMEROS GOOGLE -->
+<div id="fondo-google"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const fondo = document.getElementById('fondo-google');
+    
+    const metrics = [
+        'users: 39,323', 'sessions: 54,281', 'bounce: 42.3%', 'conv: 3.24%',
+        'revenue: $143.9K', 'transactions: 784', 'pageviews: 128.4K',
+        'avg. session: 2m 34s', 'new users: 67%', 'returning: 33%',
+        'desktop: 48%', 'mobile: 45%', 'tablet: 7%', 'google: 24.5K',
+        'direct: 12.8K', 'organic: 8.3K', 'social: 3.1K', 'email: 1.2K',
+        'goal 1: 89%', 'goal 2: 67%', 'GA4 events: 12.4K', 
+        'purchases: 784', 'add to cart: 3.2K', 'checkout: 1.8K',
+        'CTR: 2.4%', 'ROAS: 4.5x', 'AOV: $89.50', 'LTV: 3.2'
+    ];
+    
+    metrics.forEach((text, i) => {
+        const el = document.createElement('div');
+        el.className = 'numero-ga';
+        el.textContent = text;
+        el.style.left = Math.random() * 90 + '%';
+        el.style.animationDelay = i * 0.5 + 's';
+        el.style.animationDuration = (20 + Math.random() * 20) + 's';
+        el.style.fontSize = (11 + Math.floor(Math.random() * 8)) + 'px';
+        
+        const colors = [
+            'rgba(66, 133, 244, 0.25)',
+            'rgba(234, 67, 53, 0.2)',
+            'rgba(251, 188, 5, 0.2)',
+            'rgba(52, 168, 83, 0.2)'
+        ];
+        el.style.color = colors[Math.floor(Math.random() * colors.length)];
+        
+        fondo.appendChild(el);
+    });
+    
+    const barra = document.createElement('div');
+    barra.className = 'barra-google';
+    fondo.appendChild(barra);
+    
+    const logos = ['GA4', 'LOOKER', 'GMC', 'ADS', 'ANALYTICS'];
+    logos.forEach((logo, i) => {
+        const el = document.createElement('div');
+        el.className = 'numero-ga';
+        el.textContent = logo;
+        el.style.fontSize = '32px';
+        el.style.fontWeight = '700';
+        el.style.opacity = '0.03';
+        el.style.left = (5 + i * 15) + '%';
+        el.style.top = (10 + i * 8) + '%';
+        el.style.animation = 'none';
+        el.style.color = '#4285F4';
+        fondo.appendChild(el);
+    });
+});
+</script>
+
+<!-- HEADER CON VOLVER, FECHA, IDIOMA Y BOTONES DE COMPRA -->
+<header class="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-[#0d0d0d]/80 border-b border-gray-800">
+    <nav class="w-full py-4 px-6 flex justify-between items-center max-w-7xl mx-auto">
+        
+        <a href="index.html" class="text-white hover:text-[#C084FC] transition-colors text-sm font-semibold" style="font-family: 'Gentium Book Plus', serif;">
+            <i class="fas fa-arrow-left mr-1"></i>
+            <span class="lang-es">Volver al proyecto</span>
+            <span class="lang-en hidden">Back to project</span>
+        </a>
+      
+        <span class="text-white hover:text-[#C084FC] transition-colors text-lg font-semibold" style="font-family: 'Gentium Book Plus', serif;">
+            <span class="lang-es">Template Looker Studio + GA4</span>
+            <span class="lang-en hidden">Looker Studio + GA4 Template</span>
+        </span>
+      
+        <div class="flex items-center gap-3">
+
+            <button id="lang-toggle" 
+                    class="hidden md:flex text-white hover:text-[#C084FC] text-sm px-4 py-1.5 rounded-full border border-white/30 hover:border-[#C084FC] transition-all duration-300 items-center gap-2 bg-white/5 backdrop-blur-sm">
+                <span class="lang-es flex items-center gap-2">
+                    <img src="assets/images/flag-usa.png" alt="USA flag" class="w-4 h-3 inline-block object-cover">
+                    <span>English</span>
+                </span>
+                <span class="lang-en hidden flex items-center gap-2">
+                    <img src="assets/images/flag-spain.png" alt="Spain flag" class="w-4 h-3 inline-block object-cover">
+                    <span>Español</span>
+                </span>
+            </button>
+        </div>
+
+    </nav>
+</header>
+
+<main class="relative z-10 pt-24 pb-16 px-4 max-w-7xl mx-auto">
+
+    <!-- HERO SECTION -->
+    <div class="text-center mb-12">
+        <h1 class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-[#4285F4] via-[#EA4335] to-[#34A853] inline-block text-transparent bg-clip-text">
+            Looker Studio + GA4
+        </h1>
+        <p class="text-2xl text-gray-300 max-w-3xl mx-auto mb-4">
+            <span class="lang-es">Dashboard completo para ecommerce</span>
+            <span class="lang-en hidden">Complete ecommerce dashboard</span>
+        </p>
+        <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+            <span class="lang-es">3 dashboards estratégicos · Filtros interactivos · 100% personalizable</span>
+            <span class="lang-en hidden">3 strategic dashboards · Interactive filters · 100% customizable</span>
+        </p>
+        
+      <!-- Precio -->
+<div class="mt-8">
+    <!-- Precio original tachado -->
+    <div class="flex items-center justify-center gap-3 mb-2">
+        <span class="text-3xl text-gray-500 line-through decoration-2 decoration-red-500/50">45</span>
+        <span class="text-gray-500 ml-1">USD</span>
+        
+        <!-- Badge de PROMO -->
+        <span class="bg-gradient-to-r from-[#FF6B6B] to-[#FF8E8E] text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse">
+            <span class="lang-es">🔥 PROMO</span>
+            <span class="lang-en hidden">🔥 SALE</span>
+        </span>
+    </div>
+    
+    <!-- Precio promocional -->
+    <div class="flex items-center justify-center gap-2">
+        <span class="text-6xl font-bold bg-gradient-to-r from-[#A78BFA] to-[#C084FC] inline-block text-transparent bg-clip-text">35</span>
+        <span class="text-gray-400 text-2xl">USD</span>
+    </div>
+    
+    <!-- Texto promocional -->
+    <p class="text-sm text-[#A78BFA] mt-2 font-semibold">
+        <span class="lang-es">✨ Promoción de lanzamiento</span>
+        <span class="lang-en hidden">✨ Launch special</span>
+    </p>
+    
+    <!-- Cuenta regresiva (opcional) -->
+    <p class="text-xs text-gray-500 mt-1">
+        <span class="lang-es">⚡ Válido por tiempo limitado</span>
+        <span class="lang-en hidden">⚡ Limited time offer</span>
+    </p>
+</div>
+        
+        <!-- Botones de compra - Estilo personalizado -->
+<div class="flex flex-wrap gap-4 justify-center mt-8">
+    <!-- PayPal -->
+    <a href="https://www.paypal.com/ncp/payment/SZL52ZK9JVTRN" 
+       target="_blank"
+       class="bg-[#0070BA] hover:bg-[#005792] text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center gap-3 border border-white/20">
+        <i class="fab fa-paypal text-2xl"></i>
+        <span class="lang-es">Comprar con PayPal</span>
+        <span class="lang-en hidden">Buy with PayPal</span>
+    </a>
+    
+    <!-- MercadoPago -->
+    <a href="https://mpago.la/1Uhjcog" 
+       target="_blank"
+       class="bg-[#2E7DE0] hover:bg-[#1B5CB3] text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center gap-3 border border-white/20">
+        <img src="assets/images/logo-mercadopago.png" alt="MercadoPago" class="w-6 h-6 inline-block object-contain">
+        <span class="lang-es">Comprar con MercadoPago</span>
+        <span class="lang-en hidden">Buy with MercadoPago</span>
+    </a>
+</div>
+    </div>
+
+    <!-- CARACTERÍSTICAS PRINCIPALES - CENTRADAS -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div class="feature-card text-center">
+            <div class="text-[#A78BFA] text-4xl mb-4"><i class="fas fa-chart-pie"></i></div>
+            <h3 class="text-xl font-semibold text-white mb-3">
+                <span class="lang-es">3 Dashboards Estratégicos</span>
+                <span class="lang-en hidden">3 Strategic Dashboards</span>
+            </h3>
+            <p class="text-gray-400">
+                <span class="lang-es">Overview, Audience y Products con métricas clave</span>
+                <span class="lang-en hidden">Overview, Audience & Products with key metrics</span>
+            </p>
+        </div>
+        
+        <div class="feature-card text-center">
+            <div class="text-[#A78BFA] text-4xl mb-4"><i class="fas fa-filter"></i></div>
+            <h3 class="text-xl font-semibold text-white mb-3">
+                <span class="lang-es">Filtros Interactivos</span>
+                <span class="lang-en hidden">Interactive Filters</span>
+            </h3>
+            <p class="text-gray-400">
+                <span class="lang-es">Por país, dispositivo, navegador y comparativa por período</span>
+                <span class="lang-en hidden">By country, device, browser & period comparison</span>
+            </p>
+        </div>
+        
+        <div class="feature-card text-center">
+            <div class="text-[#A78BFA] text-4xl mb-4"><i class="fas fa-paint-brush"></i></div>
+            <h3 class="text-xl font-semibold text-white mb-3">
+                <span class="lang-es">100% Personalizable</span>
+                <span class="lang-en hidden">100% Customizable</span>
+            </h3>
+            <p class="text-gray-400">
+                <span class="lang-es">Colores, logo y branding adaptado a tu marca</span>
+                <span class="lang-en hidden">Colors, logo and branding adapted to your brand</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- DASHBOARDS PREVIEW CON IMÁGENES -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+        <!-- Overview (Azul) -->
+        <div class="bg-[#4285F4]/5 backdrop-blur-sm rounded-xl border border-[#4285F4]/20 overflow-hidden group hover:border-[#4285F4] hover:bg-[#4285F4]/10 hover:shadow-[0_0_20px_rgba(66,133,244,0.3)] transition-all duration-300">
+            <div class="h-72 overflow-hidden">
+                <img src="assets/images/Template-Overview.jpg" alt="Overview Dashboard" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-white mb-2 flex items-center gap-2">
+                    <i class="fas fa-eye text-[#4285F4]"></i>
+                    Overview
+                </h3>
+                <p class="text-gray-400 text-sm mb-4">
+                    <span class="lang-es">Visión general del negocio</span>
+                    <span class="lang-en hidden">Business overview</span>
+                </p>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><i class="fas fa-check text-[#34A853] mr-2"></i><span class="lang-es">Total compradores e ingresos</span><span class="lang-en hidden">Total buyers & revenue</span></li>
+                    <li><i class="fas fa-check text-[#34A853] mr-2"></i><span class="lang-es">Evolución vs usuarios</span><span class="lang-en hidden">Evolution vs users</span></li>
+                    <li><i class="fas fa-check text-[#34A853] mr-2"></i><span class="lang-es">Conversiones por canal</span><span class="lang-en hidden">Conversions by channel</span></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Audience (Rojo) -->
+        <div class="bg-[#EA4335]/5 backdrop-blur-sm rounded-xl border border-[#EA4335]/20 overflow-hidden group hover:border-[#EA4335] hover:bg-[#EA4335]/10 hover:shadow-[0_0_20px_rgba(234,67,53,0.3)] transition-all duration-300">
+            <div class="h-72 overflow-hidden">
+                <img src="assets/images/Template-Audience.jpg" alt="Audience Dashboard" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-white mb-2 flex items-center gap-2">
+                    <i class="fas fa-users text-[#EA4335]"></i>
+                    Audience
+                </h3>
+                <p class="text-gray-400 text-sm mb-4">
+                    <span class="lang-es">Perfil de usuarios</span>
+                    <span class="lang-en hidden">User profile</span>
+                </p>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><i class="fas fa-check text-[#34A853] mr-2"></i><span class="lang-es">Usuarios por edad y región</span><span class="lang-en hidden">Users by age & region</span></li>
+                    <li><i class="fas fa-check text-[#34A853] mr-2"></i><span class="lang-es">Comparativa países</span><span class="lang-en hidden">Country comparison</span></li>
+                    <li><i class="fas fa-check text-[#34A853] mr-2"></i><span class="lang-es">Variación vs mes anterior</span><span class="lang-en hidden">Variation vs previous month</span></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Products (Amarillo) -->
+        <div class="bg-[#FBBC05]/5 backdrop-blur-sm rounded-xl border border-[#FBBC05]/20 overflow-hidden group hover:border-[#FBBC05] hover:bg-[#FBBC05]/10 hover:shadow-[0_0_20px_rgba(251,188,5,0.3)] transition-all duration-300">
+            <div class="h-72 overflow-hidden">
+                <img src="assets/images/Template-Products.jpg" alt="Products Dashboard" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            </div>
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-white mb-2 flex items-center gap-2">
+                    <i class="fas fa-box text-[#FBBC05]"></i>
+                    Products
+                </h3>
+                <p class="text-gray-400 text-sm mb-4">
+                    <span class="lang-es">Embudo de conversión</span>
+                    <span class="lang-en hidden">Conversion funnel</span>
+                </p>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><i class="fas fa-check text-[#34A853] mr-2"></i><span class="lang-es">Productos favoritos</span><span class="lang-en hidden">Favorite products</span></li>
+                    <li><i class="fas fa-check text-[#34A853] mr-2"></i><span class="lang-es">Embudo completo con %</span><span class="lang-en hidden">Complete funnel with %</span></li>
+                    <li><i class="fas fa-check text-[#34A853] mr-2"></i><span class="lang-es">Preguntas guía de análisis</span><span class="lang-en hidden">Analysis guide questions</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- DATOS TÉCNICOS -->
+<div class="bg-gradient-to-r from-[#4285F4]/10 to-[#34A853]/10 backdrop-blur-sm rounded-2xl border border-gray-800 p-8 mb-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Fuente de datos -->
+        <div>
+            <h3 class="text-2xl font-semibold text-white mb-4 flex items-center gap-2">
+                <i class="fas fa-database text-[#A78BFA]"></i>
+                <span class="lang-es">Fuente de datos</span>
+                <span class="lang-en hidden">Data source</span>
+            </h3>
+            <p class="text-gray-300 mb-4">
+                <span class="lang-es">Conector oficial de Google Analytics 4 (gratuito)</span>
+                <span class="lang-en hidden">Official Google Analytics 4 connector (free)</span>
+            </p>
+            <div class="flex flex-wrap gap-2 mt-2">
+                <!-- Google Analytics 4 -->
+                <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+                    <span class="lang-es">Google Analytics 4</span>
+                    <span class="lang-en hidden">Google Analytics 4</span>
+                </span>
+                
+                <!-- Fácil conexión -->
+                <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+                    <span class="lang-es">Fácil conexión</span>
+                    <span class="lang-en hidden">Easy connection</span>
+                </span>
+                
+                <!-- Listo para usar -->
+                <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+                    <span class="lang-es">Listo para usar</span>
+                    <span class="lang-en hidden">Ready to use</span>
+                </span>
+            </div>
+        </div>
+        
+        <!-- ¿Para quién? -->
+        <div>
+            <h3 class="text-2xl font-semibold text-white mb-4 flex items-center gap-2">
+                <i class="fas fa-users text-[#A78BFA]"></i>
+                <span class="lang-es">¿Para quién?</span>
+                <span class="lang-en hidden">For whom?</span>
+            </h3>
+            <div class="flex flex-wrap gap-2 mt-2">
+                <!-- Negocios digitales -->
+                <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+                    <span class="lang-es">Negocios digitales</span>
+                    <span class="lang-en hidden">Digital businesses</span>
+                </span>
+                
+                <!-- Emprendedores -->
+                <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+                    <span class="lang-es">Emprendedores</span>
+                    <span class="lang-en hidden">Entrepreneurs</span>
+                </span>
+                
+                <!-- Agencias -->
+                <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+                    <span class="lang-es">Agencias</span>
+                    <span class="lang-en hidden">Agencies</span>
+                </span>
+                
+                <!-- Analistas -->
+                <span class="skill-badge bg-[#A78BFA]/10 text-[#A78BFA] px-3 py-1.5 rounded-full text-xs sm:text-sm border border-[#A78BFA]/30 hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:text-white hover:shadow-[0_0_15px_#A78BFA] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm cursor-default">
+                    <span class="lang-es">Analistas</span>
+                    <span class="lang-en hidden">Analysts</span>
+                </span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Contacto -->
+    <div class="text-center mt-8 pt-6 border-t border-gray-800">
+        <div class="flex flex-col md:flex-row justify-center gap-6">
+            <!-- Email -->
+            <a href="mailto:robledorociomalen@gmail.com" class="text-[#A78BFA] hover:text-white transition-colors inline-flex items-center gap-2 text-lg">
+                <i class="fas fa-envelope"></i>
+                robledorociomalen@gmail.com
+            </a>
+            
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/rociomalenrobledo" target="_blank" class="text-[#A78BFA] hover:text-white transition-colors inline-flex items-center gap-2 text-lg">
+                <i class="fab fa-linkedin"></i>
+                LinkedIn
+            </a>
+        </div>
+    </div>
+</div>
+
+    <!-- SECCIÓN DE RESEÑAS -->
+    <section class="mb-12 scroll-mt-24" id="reviews">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-semibold text-white mb-2">
+                <span class="lang-es">Compartí tu opinión</span>
+                <span class="lang-en hidden">Share your feedback</span>
+            </h2>
+            <div class="flex justify-center gap-1 text-yellow-400 text-2xl">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+            </div>
+            <p class="text-gray-400 mt-2">
+                <span class="lang-es">¿Ya usaste el template? ¡Me encantaría leer tu reseña!</span>
+                <span class="lang-en hidden">Already used the template? I'd love to read your review!</span>
+            </p>
+        </div>
+
+        <!-- RESEÑAS (3 espacios) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8" id="reviews-container">
+            <!-- Las reseñas se cargarán dinámicamente con JavaScript -->
+        </div>
+
+        <!-- FORMULARIO -->
+        <div class="max-w-2xl mx-auto">
+            <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-xl border border-[#A78BFA]/20 
+                        hover:border-[#A78BFA] hover:bg-[#A78BFA]/10 
+                        hover:shadow-[0_0_20px_rgba(167,139,250,0.3)]
+                        transition-all duration-300 p-6">
+                
+                <form id="reviewForm" class="space-y-4">
+                    <!-- Calificación con estrellas -->
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">
+                            <span class="lang-es">Calificación</span>
+                            <span class="lang-en hidden">Rating</span>
+                            <span class="text-red-500 ml-1">*</span>
+                        </label>
+                        <div class="flex gap-2 text-xl" id="reviewStarRating">
+                            <i class="far fa-star text-gray-400 hover:text-yellow-400 cursor-pointer transition-colors" data-rating="1"></i>
+                            <i class="far fa-star text-gray-400 hover:text-yellow-400 cursor-pointer transition-colors" data-rating="2"></i>
+                            <i class="far fa-star text-gray-400 hover:text-yellow-400 cursor-pointer transition-colors" data-rating="3"></i>
+                            <i class="far fa-star text-gray-400 hover:text-yellow-400 cursor-pointer transition-colors" data-rating="4"></i>
+                            <i class="far fa-star text-gray-400 hover:text-yellow-400 cursor-pointer transition-colors" data-rating="5"></i>
+                        </div>
+                        <input type="hidden" name="calificacion" id="calificacion-input" value="0" required>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Nombre completo -->
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">
+                                <span class="lang-es">Nombre y apellido</span>
+                                <span class="lang-en hidden">Full name</span>
+                                <span class="text-red-500 ml-1">*</span>
+                            </label>
+                            <input type="text" 
+                                   name="nombre" 
+                                   class="w-full px-3 py-2 text-sm bg-[#A78BFA]/5 border border-[#A78BFA]/20 rounded-lg 
+                                          focus:outline-none focus:ring-1 focus:ring-[#A78BFA] focus:border-[#A78BFA] 
+                                          text-white transition-all"
+                                   required>
+                        </div>
+                        
+                        <!-- Puesto / Rol -->
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">
+                                <span class="lang-es">Puesto / Rol</span>
+                                <span class="lang-en hidden">Position / Role</span>
+                            </label>
+                            <input type="text" 
+                                   name="puesto" 
+                                   placeholder="Ej: Emprendedor, Analista"
+                                   class="w-full px-3 py-2 text-sm bg-[#A78BFA]/5 border border-[#A78BFA]/20 rounded-lg 
+                                          focus:outline-none focus:ring-1 focus:ring-[#A78BFA] focus:border-[#A78BFA] 
+                                          text-white transition-all">
+                        </div>
+                    </div>
+                    
+                    <!-- Reseña -->
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">
+                            <span class="lang-es">Tu reseña</span>
+                            <span class="lang-en hidden">Your review</span>
+                            <span class="text-red-500 ml-1">*</span>
+                        </label>
+                        <textarea name="resena" 
+                                  rows="3" 
+                                  class="w-full px-3 py-2 text-sm bg-[#A78BFA]/5 border border-[#A78BFA]/20 rounded-lg 
+                                         focus:outline-none focus:ring-1 focus:ring-[#A78BFA] focus:border-[#A78BFA] 
+                                         text-white transition-all resize-none"
+                                  required></textarea>
+                    </div>
+                    
+                    <!-- Botón enviar -->
+                    <button type="submit" 
+                            class="w-full mt-2 px-4 py-2 bg-[#A78BFA]/10 border border-[#A78BFA]/30 
+                                   hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:shadow-[0_0_15px_rgba(167,139,250,0.3)]
+                                   text-white text-sm font-medium rounded-lg transition-all duration-300">
+                        <span class="lang-es">Enviar reseña</span>
+                        <span class="lang-en hidden">Send review</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="relative z-10 text-center py-10">
+    <p class="text-sm mb-2 text-gray-400" style="font-family: 'Gentium Book Plus', serif;">
+        &copy; <span id="current-year"></span> Rocio Robledo
+    </p>
+    <p class="text-xs text-gray-500 mb-6" style="font-family: 'Gentium Book Plus', serif;">
+        <span class="lang-es">Análisis de datos · Analítica Digital · 📍 Buenos Aires, Argentina</span>
+        <span class="lang-en hidden">Data Analytics · Digital Analytics · 📍 Buenos Aires, Argentina</span>
+    </p>
+</footer>
+
+<!-- SCRIPTS PRINCIPALES -->
+<script>
+// ===== SISTEMA DE RESEÑAS CON LOCALSTORAGE =====
+function loadReviews() {
+    console.log("Cargando reseñas...");
+    const reviews = JSON.parse(localStorage.getItem('templateReviews')) || [];
+    const reviewsContainer = document.getElementById('reviews-container');
+    
+    if (!reviewsContainer) {
+        console.error("No se encontró el contenedor de reseñas");
+        return;
+    }
+    
+    const placeholderTemplate = (mensaje) => `
+        <div class="bg-gray-800/30 backdrop-blur-sm rounded-xl border border-gray-700 p-5 opacity-60">
+            <div class="flex gap-1 text-gray-600 mb-2">
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+            </div>
+            <p class="text-gray-500 mb-3 text-sm italic">${mensaje}</p>
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
+                    <span class="text-gray-500 font-semibold">?</span>
+                </div>
+                <div>
+                    <p class="text-gray-500 font-semibold text-sm">...</p>
+                    <p class="text-gray-600 text-xs">...</p>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    const reviewTemplate = (review) => {
+        const stars = '★'.repeat(review.rating) + '☆'.repeat(5-review.rating);
+        return `
+            <div class="bg-[#A78BFA]/5 backdrop-blur-sm rounded-xl border border-[#A78BFA]/20 p-5 hover:border-[#A78BFA] hover:bg-[#A78BFA]/10 transition-all duration-300 relative group">
+                <div class="flex gap-1 text-yellow-400 mb-2 text-lg">
+                    ${stars.split('').map(s => s === '★' ? '<i class="fas fa-star"></i>' : '<i class="far fa-star"></i>').join('')}
+                </div>
+                <p class="text-gray-300 mb-3 text-sm italic">"${review.comment}"</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-[#A78BFA]/20 flex items-center justify-center">
+                        <span class="text-[#A78BFA] font-semibold">${review.name.charAt(0)}</span>
+                    </div>
+                    <div>
+                        <p class="text-white font-semibold text-sm">${review.name}</p>
+                        <p class="text-gray-400 text-xs">${review.role || 'Usuario'}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    };
+    
+    let html = '';
+    const lastReviews = reviews.slice(-3).reverse();
+    
+    lastReviews.forEach(review => {
+        html += reviewTemplate(review);
+    });
+    
+    const placeholdersNeeded = 3 - lastReviews.length;
+    const placeholderMessages = [
+        'Tu reseña aparecerá aquí',
+        'Contame qué te pareció',
+        'Compartí tu experiencia'
+    ];
+    
+    for (let i = 0; i < placeholdersNeeded; i++) {
+        html += placeholderTemplate(placeholderMessages[i]);
+    }
+    
+    reviewsContainer.innerHTML = html;
+}
+
+function initStarRating() {
+    const stars = document.querySelectorAll('#reviewStarRating i');
+    const ratingInput = document.getElementById('calificacion-input');
+    
+    if (!stars.length || !ratingInput) return;
+    
+    stars.forEach(star => {
+        star.addEventListener('mouseenter', function() {
+            const rating = this.getAttribute('data-rating');
+            highlightStars(rating);
+        });
+        
+        star.addEventListener('mouseleave', function() {
+            const currentRating = ratingInput.value;
+            highlightStars(currentRating);
+        });
+        
+        star.addEventListener('click', function() {
+            const rating = this.getAttribute('data-rating');
+            ratingInput.value = rating;
+            highlightStars(rating);
+        });
+    });
+    
+    function highlightStars(rating) {
+        stars.forEach(star => {
+            const starRating = star.getAttribute('data-rating');
+            if (starRating <= rating) {
+                star.classList.remove('far', 'text-gray-400');
+                star.classList.add('fas', 'text-yellow-400');
+            } else {
+                star.classList.remove('fas', 'text-yellow-400');
+                star.classList.add('far', 'text-gray-400');
+            }
+        });
+    }
+}
+
+function initReviewForm() {
+    const reviewForm = document.getElementById('reviewForm');
+    
+    if (!reviewForm) return;
+    
+    reviewForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const rating = document.getElementById('calificacion-input').value;
+        const name = document.querySelector('input[name="nombre"]').value;
+        const role = document.querySelector('input[name="puesto"]').value || 'Usuario';
+        const comment = document.querySelector('textarea[name="resena"]').value;
+        
+        if (rating === '0') {
+            alert('Por favor seleccioná una calificación');
+            return;
+        }
+        
+        const newReview = {
+            rating: parseInt(rating),
+            name: name,
+            role: role,
+            comment: comment,
+            date: new Date().toISOString()
+        };
+        
+        const reviews = JSON.parse(localStorage.getItem('templateReviews')) || [];
+        reviews.push(newReview);
+        localStorage.setItem('templateReviews', JSON.stringify(reviews));
+        
+        loadReviews();
+        
+        this.reset();
+        document.querySelectorAll('#reviewStarRating i').forEach(star => {
+            star.classList.remove('fas', 'text-yellow-400');
+            star.classList.add('far', 'text-gray-400');
+        });
+        document.getElementById('calificacion-input').value = '0';
+        
+        alert('¡Gracias por tu reseña! Aparecerá en la página.');
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM cargado, inicializando...");
+    
+    const yearElement = document.getElementById('current-year');
+    if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+    }
+    
+    const langToggle = document.getElementById('lang-toggle');
+    const htmlElement = document.documentElement;
+
+    function setLanguage(lang) {
+        document.querySelectorAll('.lang-es').forEach(el => 
+            el.classList.toggle('hidden', lang !== 'es')
+        );
+        document.querySelectorAll('.lang-en').forEach(el => 
+            el.classList.toggle('hidden', lang !== 'en')
+        );
+        htmlElement.lang = lang;
+        localStorage.setItem('preferredLang', lang);
+    }
+
+    const storedLang = localStorage.getItem('preferredLang') || 'es';
+    setLanguage(storedLang);
+
+    if (langToggle) {
+        langToggle.addEventListener('click', () => {
+            const newLang = htmlElement.lang === 'es' ? 'en' : 'es';
+            setLanguage(newLang);
+        });
+    }
+
+    loadReviews();
+    initStarRating();
+    initReviewForm();
+});
+
+
+</script>
+
+<!-- PANEL DE ADMINISTRACIÓN (solo con Ctrl+Shift+K) -->
+<div id="admin-panel" class="fixed bottom-4 right-4 z-50 hidden">
+    <button onclick="toggleAdminModal()" class="bg-[#A78BFA] hover:bg-[#9570e0] text-white px-4 py-2 rounded-full text-sm shadow-xl flex items-center gap-2">
+        <i class="fas fa-cog"></i>
+        <span class="lang-es">Admin</span>
+        <span class="lang-en hidden">Admin</span>
+    </button>
+</div>
+
+<div id="adminModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4" style="background-color: rgba(0,0,0,0.8);">
+    <div class="bg-[#0D0D0D] border border-[#A78BFA] rounded-2xl max-w-2xl w-full p-6 relative max-h-[80vh] overflow-y-auto">
+        <button onclick="toggleAdminModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+            <i class="fas fa-times text-xl"></i>
+        </button>
+        
+        <h3 class="text-2xl font-semibold text-white mb-4">
+            <span class="lang-es">Administrar Reseñas</span>
+            <span class="lang-en hidden">Manage Reviews</span>
+        </h3>
+        
+        <div id="admin-reviews-list" class="space-y-4 mb-4"></div>
+        
+        <div class="flex gap-3 mt-4 pt-4 border-t border-gray-800">
+            <button onclick="exportReviews()" class="flex-1 bg-[#A78BFA]/10 border border-[#A78BFA]/30 hover:border-[#A78BFA] text-white px-4 py-2 rounded-lg transition-colors">
+                <i class="fas fa-download mr-2"></i>Exportar
+            </button>
+            <button onclick="importReviews()" class="flex-1 bg-[#A78BFA]/10 border border-[#A78BFA]/30 hover:border-[#A78BFA] text-white px-4 py-2 rounded-lg transition-colors">
+                <i class="fas fa-upload mr-2"></i>Importar
+            </button>
+            <button onclick="resetAllReviewsAdmin()" class="flex-1 bg-red-600/20 border border-red-600/30 hover:border-red-600 text-red-400 hover:text-red-300 px-4 py-2 rounded-lg transition-colors">
+                <i class="fas fa-trash mr-2"></i>Resetear
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="logout-btn" class="fixed bottom-4 left-4 z-50 hidden">
+    <button onclick="logoutAdmin()" class="bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-xs">
+        <i class="fas fa-sign-out-alt mr-1"></i>Salir
+    </button>
+</div>
+
+<script>
+// ===== ADMIN STUFF =====
+const ADMIN_KEY = "rocio2024";
+let isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+
+if (isAdmin) {
+    document.getElementById('admin-panel').classList.remove('hidden');
+    document.getElementById('logout-btn').classList.remove('hidden');
+}
+
+function promptAdminKey() {
+    const key = prompt("Ingresá la clave de administrador:");
+    if (key === ADMIN_KEY) {
+        isAdmin = true;
+        sessionStorage.setItem('isAdmin', 'true');
+        document.getElementById('admin-panel').classList.remove('hidden');
+        document.getElementById('logout-btn').classList.remove('hidden');
+        alert("¡Bienvenida Rocío!");
+    } else if (key !== null) {
+        alert("Clave incorrecta");
+    }
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.shiftKey && e.key === 'K') {
+        e.preventDefault();
+        promptAdminKey();
+    }
+});
+
+function toggleAdminModal() {
+    const modal = document.getElementById('adminModal');
+    if (modal.classList.contains('hidden')) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        loadAdminReviews();
+    } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+}
+
+function loadAdminReviews() {
+    const reviews = JSON.parse(localStorage.getItem('templateReviews')) || [];
+    const container = document.getElementById('admin-reviews-list');
+    
+    if (reviews.length === 0) {
+        container.innerHTML = `<div class="text-center py-8 text-gray-500"><i class="fas fa-star text-4xl mb-2 opacity-30"></i><p>No hay reseñas todavía</p></div>`;
+        return;
+    }
+    
+    let html = '';
+    reviews.reverse().forEach((review) => {
+        html += `
+            <div class="bg-gray-900/50 rounded-lg border border-gray-800 p-4">
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex gap-1 text-yellow-400">
+                        ${Array(review.rating).fill('<i class="fas fa-star text-sm"></i>').join('')}
+                        ${Array(5-review.rating).fill('<i class="far fa-star text-sm"></i>').join('')}
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="editReview('${review.date}')" class="text-blue-400 hover:text-blue-300"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteReviewAdmin('${review.date}')" class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+                <p class="text-gray-300 text-sm mb-2">"${review.comment}"</p>
+                <div class="flex items-center gap-2">
+                    <span class="text-white font-semibold text-sm">${review.name}</span>
+                    <span class="text-gray-500 text-xs">${review.role || 'Usuario'}</span>
+                </div>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+}
+
+window.editReview = function(dateToEdit) {
+    let reviews = JSON.parse(localStorage.getItem('templateReviews')) || [];
+    const review = reviews.find(r => r.date === dateToEdit);
+    if (!review) return;
+    
+    const newName = prompt("Editar nombre:", review.name);
+    if (newName !== null) review.name = newName;
+    
+    const newRole = prompt("Editar puesto/rol:", review.role || '');
+    if (newRole !== null) review.role = newRole;
+    
+    const newComment = prompt("Editar comentario:", review.comment);
+    if (newComment !== null) review.comment = newComment;
+    
+    const newRating = prompt("Editar calificación (1-5):", review.rating);
+    if (newRating !== null && newRating >= 1 && newRating <= 5) {
+        review.rating = parseInt(newRating);
+    }
+    
+    localStorage.setItem('templateReviews', JSON.stringify(reviews));
+    loadReviews();
+    loadAdminReviews();
+}
+
+window.deleteReviewAdmin = function(dateToDelete) {
+    if (confirm('¿Eliminar esta reseña?')) {
+        let reviews = JSON.parse(localStorage.getItem('templateReviews')) || [];
+        reviews = reviews.filter(review => review.date !== dateToDelete);
+        localStorage.setItem('templateReviews', JSON.stringify(reviews));
+        loadReviews();
+        loadAdminReviews();
+    }
+}
+
+window.resetAllReviewsAdmin = function() {
+    if (confirm('¿Eliminar TODAS las reseñas?')) {
+        localStorage.removeItem('templateReviews');
+        loadReviews();
+        loadAdminReviews();
+        toggleAdminModal();
+    }
+}
+
+function exportReviews() {
+    const reviews = localStorage.getItem('templateReviews') || '[]';
+    const blob = new Blob([reviews], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `reseñas-backup-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+}
+
+function importReviews() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = function(e) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const reviews = JSON.parse(e.target.result);
+                localStorage.setItem('templateReviews', JSON.stringify(reviews));
+                loadReviews();
+                loadAdminReviews();
+                alert('Reseñas importadas correctamente');
+            } catch (error) {
+                alert('Error al importar: archivo inválido');
+            }
+        };
+        reader.readAsText(file);
+    };
+    input.click();
+}
+
+window.logoutAdmin = function() {
+    sessionStorage.removeItem('isAdmin');
+    location.reload();
+}
+</script>
+
+</body>
+</html>
