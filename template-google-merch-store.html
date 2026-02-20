@@ -173,18 +173,18 @@ document.addEventListener('DOMContentLoaded', () => {
         
         <a href="index.html" class="text-white hover:text-[#C084FC] transition-colors text-sm font-semibold" style="font-family: 'Gentium Book Plus', serif;">
             <i class="fas fa-arrow-left mr-1"></i>
-            <span class="lang-es">Volver</span>
-            <span class="lang-en hidden">Back</span>
+            <span class="lang-es">Volver al proyecto</span>
+            <span class="lang-en hidden">Back to proyect</span>
         </a>
       
-        <span class="text-white hover:text-[#C084FC] transition-colors text-lg font-semibold" style="font-family: 'Gentium Book Plus', serif;">
-            <span class="lang-es">Template Looker Studio + GA4</span>
-            <span class="lang-en hidden">Looker Studio + GA4 Template</span>
-        </span>
+      <!-- Nombre del dashboard (solo vista, no clickeable) -->
+      <span class="text-white hover:text-[#C084FC] transition-colors text-lg font-semibold" style="font-family: 'Gentium Book Plus', serif;">
+        <span class="lang-es">Template Looker Studio + GA4</span>
+        <span class="lang-en hidden">Template Looker Studio + GA4</span>
+      </span>
       
-        <div class="flex items-center gap-3">
-
-            <button id="lang-toggle" 
+      <!-- Botón de idioma -->
+<button id="lang-toggle" 
         class="text-white hover:text-[#C084FC] text-[11px] sm:text-sm px-2 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/30 hover:border-[#C084FC] transition-all duration-300 flex items-center gap-1 sm:gap-2 bg-white/5 backdrop-blur-sm whitespace-nowrap"
         style="font-family: 'Gentium Book Plus', serif;"> 
     <span class="lang-es flex items-center gap-1">
@@ -991,6 +991,7 @@ window.logoutAdmin = function() {
 </body>
 
 </html>
+
 
 
 
