@@ -1263,7 +1263,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <input type="hidden" name="_template" value="table">
                         <input type="hidden" name="_captcha" value="false">   
                         <input type="hidden" name="_autoresponse" id="autoresponse-field" value="">
-                        <input type="hidden" name="_next" value="https://rociorobledo.github.io/portfolio/">
+                        <input type="hidden" name="_next" value="https://rociorobledo.github.io/portfolio/#contacto">
                         
                         <div class="space-y-1.5 flex-1">
                             
@@ -1637,6 +1637,43 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert(currentLang === 'es' ? 'Error al enviar. Intenta de nuevo.' : 'Error sending. Try again.');
             });
         });
+    }
+});
+</script>
+
+            <script>
+// Auto-redirección con hash
+document.addEventListener('DOMContentLoaded', function() {
+    // Si llegamos a la página con #contacto en la URL
+    if (window.location.hash === '#contacto') {
+        // Mostramos mensaje de éxito
+        const submitBtn = document.getElementById('submit-btn');
+        const submitTextEs = document.getElementById('submit-text-es');
+        const submitTextEn = document.getElementById('submit-text-en');
+        const currentLang = document.documentElement.lang;
+        
+        // Cambiamos el texto del botón temporalmente
+        if (currentLang === 'es') {
+            submitTextEs.textContent = '¡Enviado! ✓';
+        } else {
+            submitTextEn.textContent = 'Sent! ✓';
+        }
+        
+        // Limpiamos el formulario
+        const form = document.querySelector('form');
+        if (form) form.reset();
+        
+        // Limpiamos el hash de la URL sin recargar
+        history.replaceState(null, null, window.location.pathname);
+        
+        // Restauramos el botón después de 3 segundos
+        setTimeout(() => {
+            if (currentLang === 'es') {
+                submitTextEs.textContent = 'Enviar';
+            } else {
+                submitTextEn.textContent = 'Send';
+            }
+        }, 3000);
     }
 });
 </script>
