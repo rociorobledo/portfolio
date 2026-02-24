@@ -1252,8 +1252,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     </h3>
                     
                     <form action="https://formsubmit.co/robledorociomalen@gmail.com" 
-                          method="POST" 
+                          method="POST"
+                          target="hidden_iframe"
                           class="flex flex-col flex-1">
+
+                        <!-- Iframe oculto para recibir la respuesta sin redirigir -->
+<iframe name="hidden_iframe" style="display:none;"></iframe>
                         
                         <input type="hidden" name="_subject" value="📬 Nuevo mensaje desde tu portfolio">
                         <input type="hidden" name="_template" value="table">
@@ -1572,7 +1576,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (form) {
         form.addEventListener('submit', function(e) {
-            e.preventDefault();
             
             const currentLang = document.documentElement.lang;
             if (currentLang === 'es') {
