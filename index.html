@@ -1573,18 +1573,46 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitBtn = document.getElementById('submit-btn');
     const submitTextEs = document.getElementById('submit-text-es');
     const submitTextEn = document.getElementById('submit-text-en');
+    const inputNombre = document.getElementById('input-nombre');
+    const inputEmail = document.getElementById('input-email');
+    const inputMensaje = document.getElementById('input-mensaje');
     
     if (form) {
         form.addEventListener('submit', function(e) {
+            // Prevenimos el envío normal para manejarlo con fetch
+            e.preventDefault();
             
             const currentLang = document.documentElement.lang;
-            if (currentLang === 'es') {
-                submitTextEs.textContent = 'Enviado ✓';
-            } else {
-                submitTextEn.textContent = 'Sent ✓';
-            }
             
+            // Cambiamos el texto del botón
+            if (currentLang === 'es') {
+                submitTextEs.textContent = 'Enviando...';
+            } else {
+                submitTextEn.textContent = 'Sending...';
+            }
             submitBtn.disabled = true;
+            
+            // Recopilamos los datos del formulario
+            const formData = new FormData(form);
+            
+            // Enviamos con fetch
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Cambiamos el texto a "Enviado ✓"
+                    if (currentLang === 'es') {
+                        submitTextEs.textContent = 'Enviado ✓';
+                    } else {
+                        submitTextEn.textContent = 'Sent ✓';
+                    }
+                    
+                    // Limpiamos el formulario
+                    form.reset();
+                    
+                    // Después de 3 segundos, volvemos a "Enviar"
                     setTimeout(() => {
                         if (currentLang === 'es') {
                             submitTextEs.textContent = 'Enviar';
@@ -1592,18 +1620,21 @@ document.addEventListener('DOMContentLoaded', function() {
                             submitTextEn.textContent = 'Send';
                         }
                         submitBtn.disabled = false;
-                        form.reset();
                     }, 3000);
+                } else {
+                    throw new Error('Error en el envío');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
+                // En caso de error, restauramos el botón
                 if (currentLang === 'es') {
                     submitTextEs.textContent = 'Enviar';
                 } else {
                     submitTextEn.textContent = 'Send';
                 }
                 submitBtn.disabled = false;
+                alert(currentLang === 'es' ? 'Error al enviar. Intenta de nuevo.' : 'Error sending. Try again.');
             });
         });
     }
