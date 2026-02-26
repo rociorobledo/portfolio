@@ -1075,11 +1075,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <h3 class="text-sm font-semibold text-[#A78BFA]">
                         <span class="lang-es">Manipulación de Datos</span>
-                        <span class="lang-en hidden">Organización de datos crudos en estructuras listas para análisis.</span>
+                        <span class="lang-en hidden">Data manipulation</span>
                     </h3>
                 </div>
                 <p class="text-gray-400 text-xs leading-relaxed">
-                    <span class="lang-es">Automatización de reportes, procesos de análisis y flujos de datos.</span>
+                    <span class="lang-es">Organización de datos crudos en estructuras listas para análisis.</span>
                     <span class="lang-en hidden">Organizing raw data into structured formats ready for analysis.</span>
                 </p>
             </div>
@@ -1320,14 +1320,14 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                             
                             <!-- Botón enviar -->
-                            <button type="submit" 
-                                    id="submit-btn"
-                                    class="w-full mt-2 px-4 py-1.5 bg-[#A78BFA]/10 border border-[#A78BFA]/30 
-                                           hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:shadow-[0_0_15px_rgba(167,139,250,0.3)]
-                                           text-white text-xs font-medium rounded-lg transition-all duration-300">
-                                <span class="lang-es" id="submit-text-es">Enviar</span>
-                                <span class="lang-en hidden" id="submit-text-en">Send</span>
-                            </button>
+<button type="submit" 
+        id="submit-btn"
+        class="w-full mt-2 px-4 py-1.5 bg-[#A78BFA]/10 border border-[#A78BFA]/30 
+               hover:border-[#A78BFA] hover:bg-[#A78BFA]/20 hover:shadow-[0_0_15px_rgba(167,139,250,0.3)]
+               text-white text-xs font-medium rounded-lg transition-all duration-300">
+    <span class="lang-es" id="submit-text-es">Enviar mensaje</span>
+    <span class="lang-en hidden" id="submit-text-en">Send message</span>
+</button>
                             
                         </div>
                         
@@ -1577,27 +1577,36 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (form) {
         form.addEventListener('submit', function(e) {
-            // SOLO CAMBIAMOS EL TEXTO, NO HACEMOS e.preventDefault()
-            const currentLang = document.documentElement.lang;
-            if (currentLang === 'es') {
-                submitTextEs.textContent = 'Enviando...';
-            } else {
-                submitTextEn.textContent = 'Sending...';
-            }
+            // Prevenir envío inmediato para mostrar el cambio de texto
+            e.preventDefault();
             
+            const currentLang = document.documentElement.lang;
+            
+            // Deshabilitar botón y cambiar texto
             submitBtn.disabled = true;
             
-            // EL FORMULARIO SE ENVÍA NORMALMENTE (sin fetch)
+            if (currentLang === 'es') {
+                submitTextEs.textContent = 'Enviando...';
+                submitTextEn.textContent = 'Sending...'; // Por si cambia idioma mientras
+            } else {
+                submitTextEn.textContent = 'Sending...';
+                submitTextEs.textContent = 'Enviando...'; // Por si cambia idioma mientras
+            }
             
-            // Restauramos el botón después de 3 segundos (por si hay error)
+            // Mostrar los spans correctos según idioma
+            document.querySelectorAll('.lang-es').forEach(el => {
+                if (el.id === 'submit-text-es') el.classList.remove('hidden');
+                else if (el.id !== 'submit-text-en') el.classList.toggle('hidden', currentLang !== 'es');
+            });
+            document.querySelectorAll('.lang-en').forEach(el => {
+                if (el.id === 'submit-text-en') el.classList.remove('hidden');
+                else if (el.id !== 'submit-text-es') el.classList.toggle('hidden', currentLang !== 'en');
+            });
+            
+            // Ahora sí enviar el formulario
             setTimeout(() => {
-                if (currentLang === 'es') {
-                    submitTextEs.textContent = 'Enviar';
-                } else {
-                    submitTextEn.textContent = 'Send';
-                }
-                submitBtn.disabled = false;
-            }, 3000);
+                form.submit();
+            }, 300);
         });
     }
 });
