@@ -1263,7 +1263,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         <input type="hidden" name="_template" value="table">
                         <input type="hidden" name="_captcha" value="false">   
                         <input type="hidden" name="_autoresponse" id="autoresponse-field" value="">
-                        <input type="hidden" name="_next" value="https://rociorobledo.github.io/portfolio/#contacto">
+                        <input type="hidden" name="_from" value="Rocio Robledo <robledorociomalen@gmail.com>">
+                        <input type="hidden" name="_next" value="https://rociorobledo.github.io/portfolio/">
                         
                         <div class="space-y-1.5 flex-1">
                             
@@ -1573,107 +1574,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitBtn = document.getElementById('submit-btn');
     const submitTextEs = document.getElementById('submit-text-es');
     const submitTextEn = document.getElementById('submit-text-en');
-    const inputNombre = document.getElementById('input-nombre');
-    const inputEmail = document.getElementById('input-email');
-    const inputMensaje = document.getElementById('input-mensaje');
     
     if (form) {
         form.addEventListener('submit', function(e) {
-            // Prevenimos el envío normal para manejarlo con fetch
-            e.preventDefault();
-            
+            // SOLO CAMBIAMOS EL TEXTO, NO HACEMOS e.preventDefault()
             const currentLang = document.documentElement.lang;
-            
-            // Cambiamos el texto del botón
             if (currentLang === 'es') {
                 submitTextEs.textContent = 'Enviando...';
             } else {
                 submitTextEn.textContent = 'Sending...';
             }
+            
             submitBtn.disabled = true;
             
-            // Recopilamos los datos del formulario
-            const formData = new FormData(form);
+            // EL FORMULARIO SE ENVÍA NORMALMENTE (sin fetch)
             
-            // Enviamos con fetch
-            fetch(form.action, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Cambiamos el texto a "Enviado ✓"
-                    if (currentLang === 'es') {
-                        submitTextEs.textContent = 'Enviado ✓';
-                    } else {
-                        submitTextEn.textContent = 'Sent ✓';
-                    }
-                    
-                    // Limpiamos el formulario
-                    form.reset();
-                    
-                    // Después de 3 segundos, volvemos a "Enviar"
-                    setTimeout(() => {
-                        if (currentLang === 'es') {
-                            submitTextEs.textContent = 'Enviar';
-                        } else {
-                            submitTextEn.textContent = 'Send';
-                        }
-                        submitBtn.disabled = false;
-                    }, 3000);
-                } else {
-                    throw new Error('Error en el envío');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // En caso de error, restauramos el botón
+            // Restauramos el botón después de 3 segundos (por si hay error)
+            setTimeout(() => {
                 if (currentLang === 'es') {
                     submitTextEs.textContent = 'Enviar';
                 } else {
                     submitTextEn.textContent = 'Send';
                 }
                 submitBtn.disabled = false;
-                alert(currentLang === 'es' ? 'Error al enviar. Intenta de nuevo.' : 'Error sending. Try again.');
-            });
+            }, 3000);
         });
-    }
-});
-</script>
-
-            <script>
-// Auto-redirección con hash
-document.addEventListener('DOMContentLoaded', function() {
-    // Si llegamos a la página con #contacto en la URL
-    if (window.location.hash === '#contacto') {
-        // Mostramos mensaje de éxito
-        const submitBtn = document.getElementById('submit-btn');
-        const submitTextEs = document.getElementById('submit-text-es');
-        const submitTextEn = document.getElementById('submit-text-en');
-        const currentLang = document.documentElement.lang;
-        
-        // Cambiamos el texto del botón temporalmente
-        if (currentLang === 'es') {
-            submitTextEs.textContent = '¡Enviado! ✓';
-        } else {
-            submitTextEn.textContent = 'Sent! ✓';
-        }
-        
-        // Limpiamos el formulario
-        const form = document.querySelector('form');
-        if (form) form.reset();
-        
-        // Limpiamos el hash de la URL sin recargar
-        history.replaceState(null, null, window.location.pathname);
-        
-        // Restauramos el botón después de 3 segundos
-        setTimeout(() => {
-            if (currentLang === 'es') {
-                submitTextEs.textContent = 'Enviar';
-            } else {
-                submitTextEn.textContent = 'Send';
-            }
-        }, 3000);
     }
 });
 </script>
