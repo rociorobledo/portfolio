@@ -1210,20 +1210,19 @@ document.addEventListener('DOMContentLoaded', function() {
 <section id="contacto" class="py-8 sm:py-10 bg-transparent text-white">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
 
-        <!-- TÍTULO PRINCIPAL -->
+        <!-- TÍTULO PRINCIPAL CENTRADO -->
         <h2 class="text-2xl sm:text-3xl font-bold text-center mb-5">
             <span class="lang-es">Contacto</span>
             <span class="lang-en hidden">Contact</span>
         </h2>
 
-        <!-- GRILLA 2 COLUMNAS -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
-            
-            <!-- COLUMNA IZQUIERDA - CONECTEMOS -->
-            <div class="lg:col-span-3 flex flex-col h-[340px]">
+        <!-- CONTENEDOR CENTRADO PARA LA COLUMNA -->
+        <div class="flex justify-center">
+            <!-- COLUMNA CONECTEMOS CENTRADA -->
+            <div class="lg:col-span-3 flex flex-col h-[340px] w-full max-w-md">
                 <div class="flex flex-col justify-between h-full">
                     <div>
-                        <h3 class="text-lg font-semibold text-[#A78BFA] mb-6">
+                        <h3 class="text-lg font-semibold text-[#A78BFA] text-center mb-6">
                             <span class="lang-es">Conectemos</span>
                             <span class="lang-en hidden">Let's connect</span>
                         </h3>
@@ -1232,46 +1231,45 @@ document.addEventListener('DOMContentLoaded', function() {
                             <!-- LinkedIn -->
                             <a href="https://www.linkedin.com/in/rociomalenrobledo/" 
                                target="_blank" 
-                               class="flex items-center gap-4 group">
+                               class="flex items-center gap-4 group justify-center">
                                 <div class="w-10 h-10 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#A78BFA]/20 transition-all">
                                     <i class="fab fa-linkedin text-[#A78BFA] text-base"></i>
                                 </div>
                                 <div>
-                                    <p class="text-base font-medium text-white group-hover:text-[#A78BFA] transition-colors">LinkedIn</p>
-                                    <p class="text-xs text-gray-400">/rociomalenrobledo</p>
+                                    <p class="text-base font-medium text-white group-hover:text-[#A78BFA] transition-colors text-left">LinkedIn</p>
+                                    <p class="text-xs text-gray-400 text-left">/rociomalenrobledo</p>
                                 </div>
                             </a>
                             
-                            <!-- GitHub 
+                            <!-- GitHub (comentado)
                             <a href="https://github.com/rociorobledo" 
                                target="_blank" 
-                               class="flex items-center gap-4 group">
+                               class="flex items-center gap-4 group justify-center">
                                 <div class="w-10 h-10 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#A78BFA]/20 transition-all">
                                     <i class="fab fa-github text-[#A78BFA] text-base"></i>
                                 </div>
                                 <div>
-                                    <p class="text-base font-medium text-white group-hover:text-[#A78BFA] transition-colors">GitHub</p>
-                                    <p class="text-xs text-gray-400">/rociorobledo</p>
+                                    <p class="text-base font-medium text-white group-hover:text-[#A78BFA] transition-colors text-left">GitHub</p>
+                                    <p class="text-xs text-gray-400 text-left">/rociorobledo</p>
                                 </div>
                             </a>-->
                             
                             <!-- Email -->
                             <a href="mailto:robledorociomalen@gmail.com" 
-                               class="flex items-center gap-4 group">
+                               class="flex items-center gap-4 group justify-center">
                                 <div class="w-10 h-10 rounded-lg bg-[#A78BFA]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#A78BFA]/20 transition-all">
                                     <i class="fas fa-envelope text-[#A78BFA] text-base"></i>
                                 </div>
                                 <div>
-                                    <p class="text-base font-medium text-white group-hover:text-[#A78BFA] transition-colors">Email</p>
-                                    <p class="text-xs text-gray-400">robledorociomalen@gmail.com</p>
+                                    <p class="text-base font-medium text-white group-hover:text-[#A78BFA] transition-colors text-left">Email</p>
+                                    <p class="text-xs text-gray-400 text-left">robledorociomalen@gmail.com</p>
                                 </div>
                             </a>
                         </div>
                     </div>
                 </div>
-            </div> <!-- FIN COLUMNA IZQUIERDA -->
-  
-        </div> <!-- FIN GRILLA -->
+            </div> <!-- FIN COLUMNA CONECTEMOS -->
+        </div> <!-- FIN CONTENEDOR CENTRADO -->
         
     </div>
 </section>
